@@ -1,4 +1,7 @@
 # TODO -to mark home lane in safe state or not
+#TODO- define method to check -given a token,token_loc+dice enters into home lane of diff color
+# method to check token going in finish state or not if counter==57 going in finish state 
+#call checkvalid fn as soon as u enter getBestPossibleMove,and use the new location further,instead of calling it after the Getbest...fn
 
 
 
@@ -289,19 +292,21 @@ Board.append(Cell("W", False, False, False))
 #update board and return "Invalid" if not possible
 
 def updateboard(token_no,dice_value):
-
+  
     token_pos = my_player.ptokenlist[token_no].location + dice_value
 
     my_player.ptokenlist[token_no].counter += dice_value
 
-    if(my_player.ptokenlist[token_no].color != Board[token_pos].color) and (Board[token_pos].color != "W"):
+    if(my_player.ptokenlist[token_no].color != Board[token_pos].color) and (Board[token_pos].color != "W"):#checks if it enters into diff color homelane
 
         token_pos +=5
 
-
+    '''if(my_player.ptokenlist[token_no].counter==57)
+       
+           set location of token to -2 implies it has reached finish state '''
 
     if(my_player.ptokenlist[token_no].counter >56 ): #change 33 to correct value of toatal moves possible
-
+        my_player.ptokenlist[token_no].counter -= dice_value   #token will not make move, counter remain unchanged
         return "Invalid"
 
     if(Board[token_pos].safe_state_flag == True):
@@ -324,7 +329,7 @@ def updateboard(token_no,dice_value):
 
 
 
-    my_player.ptokenlist[token_no].location = token_pos
+    my_player.ptokenlist[token_no].setlocation(token_pos)
 
 
 
@@ -429,7 +434,7 @@ while (not my_player.haswon()) and (not opp_player.haswon()):
 
             else:
 
-                f=0
+                f=0     #
 
                 x = ''
 
@@ -450,7 +455,7 @@ while (not my_player.haswon()) and (not opp_player.haswon()):
                         index = i
 
                         break;
-
+                   # update location of moved token
                 if f == 1:
 
                     sys.stdout.write(my_color + str(index) +'_'+ str(dice_value) + '\n')
