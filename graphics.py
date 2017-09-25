@@ -175,42 +175,40 @@ def graphics(player_1, player_2, gm ):
 		          ]
 
 		for p in range(4):
-                        if(gm==0):
+                    if(gm==0):
 		                if(my_player.ptokenlist[p].location==-1):
 		                   coins[p]['x']=R_I[p]['x'] 
 		                   coins[p]['y']=R_I[p]['y']   
 		                else:
 		                   coins[p]['x']=position[my_player.ptokenlist[p].location]['x']
-				   coins[p]['y']=position[my_player.ptokenlist[p].location]['y']
+				           coins[p]['y']=position[my_player.ptokenlist[p].location]['y']
 		                if(opp_player.ptokenlist[p].location==-1):
 		                   coins_o[p]['x']=Y_I[p]['x'] 
 		                   coins_o[p]['y']=Y_I[p]['y']   
 		                else:
 		                   coins_o[p]['x']=position[opp_player.ptokenlist[p].location]['x']
-				   coins_o[p]['y']=position[opp_player.ptokenlist[p].location]['y']
-                        else:
-                               if(my_player.ptokenlist[p].location==-1):
+				           coins_o[p]['y']=position[opp_player.ptokenlist[p].location]['y']
+                    else:
+                        if(my_player.ptokenlist[p].location==-1):
 		                   coins[p]['x']=B_I[p]['x'] 
 		                   coins[p]['y']=B_I[p]['y']   
-		               else:
+		                else:
 		                   coins[p]['x']=position[my_player.ptokenlist[p].location]['x']
-				   coins[p]['y']=position[my_player.ptokenlist[p].location]['y']
-		               if(opp_player.ptokenlist[p].location==-1):
+				           coins[p]['y']=position[my_player.ptokenlist[p].location]['y']
+		                if(opp_player.ptokenlist[p].location==-1):
 		                   coins_o[p]['x']=G_I[p]['x'] 
 		                   coins_o[p]['y']=G_I[p]['y']   
-		               else:
+		                else:
 		                   coins_o[p]['x']=position[opp_player.ptokenlist[p].location]['x']
-				   coins_o[p]['y']=position[opp_player.ptokenlist[p].location]['y']
+				           coins_o[p]['y']=position[opp_player.ptokenlist[p].location]['y']
 		        pygame.draw.ellipse(screen, COLOR1, [coins[p]['x'],coins[p]['y'],35,35],0)
-			pygame.draw.ellipse(screen, COLOR2, [coins_o[p]['x'],coins_o[p]['y'],35,35],0)
-		pygame.display.update()
-		time.sleep(0.8)
-                pygame.display.flip()
-	        clocktime.tick(60)
+			    pygame.draw.ellipse(screen, COLOR2, [coins_o[p]['x'],coins_o[p]['y'],35,35],0)
+		    pygame.display.update()
+		    time.sleep(0.8)
+        pygame.display.flip()
+	    clocktime.tick(60)
 
 class Token:
-
-
 
     counter = 0
 
@@ -306,6 +304,8 @@ class Cell:
 
 
 
+		
+		
 tl = sys.stdin.readline().strip()
 
 tl1 = int(tl.split(' ')[1])
@@ -691,4 +691,4 @@ while alive:
 	    	if move.strip().split('<next>')[-1] == 'REPEAT':
 
 			REPEAT = True    
-    graphics(my_player, opp_player, gm)
+        graphics(my_player, opp_player, gm)
