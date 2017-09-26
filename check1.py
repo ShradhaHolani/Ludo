@@ -351,6 +351,7 @@ while (not my_player.haswon()) and (not opp_player.haswon()):
         sys.stderr.write('read from dice string ')
         if 'SIXES' in dice:
             sys.stdout.write('NA')
+            sys.stdout.flush()
 
         else:
             while i < len(dice.split(' ')):
@@ -364,11 +365,11 @@ while (not my_player.haswon()) and (not opp_player.haswon()):
                     if (dice_value == 6 or dice_value == 1):
 
                         my_player.ptokenlist[0].setlocation(
-                            startStates[my_color] + dice_value)  # set the token to start position+dicevalue
+                            startStates[my_color])  # set the token to start position+dicevalue
 
                         my_player.out_pieces = my_player.out_pieces + 1
 
-                        my_player.ptokenlist[0].counter += dice_value
+                        my_player.ptokenlist[0].counter += 1
 
                         sys.stderr.write('move sent: ' + str(dice_value) + '\n')
                         move_list.append(my_color + str(0) + '_' + str(dice_value))
@@ -390,11 +391,11 @@ while (not my_player.haswon()) and (not opp_player.haswon()):
                         for i in range(4):
 
                             if (my_player.ptokenlist[i].location == -1):
-                                my_player.ptokenlist[i].setlocation(startStates[my_color] + dice_value)
+                                my_player.ptokenlist[i].setlocation(startStates[my_color] )
 
                                 my_player.out_pieces = my_player.out_pieces + 1
 
-                                my_player.ptokenlist[i].counter += dice_value
+                                my_player.ptokenlist[i].counter += 1
                                 move_list.append(my_color + str(i) + '_' + str(dice_value))
                                 break
 
@@ -410,6 +411,7 @@ while (not my_player.haswon()) and (not opp_player.haswon()):
                         ind = invalidHomeLane(t, dice_value)  # returns the valid index at which t is to be placed
 
                         my_player.ptokenlist[t.id].setlocation(ind)  # set the token to start position+dicevalue
+                        my_player.ptokenlist[t.id].counter+=dice_value
                         move_list.append(my_color + str(t.id) + '_' + str(dice_value) + '\n')
                         # sys.stdout.write(my_color + str(t.id) + '_'+str(dice_value) + '\n')
 
