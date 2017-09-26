@@ -109,11 +109,15 @@ else:
 tokenlist = []
 
 for i in range(4):
-    tokenlist.append(Token(color[pid - 1], i, -1))  # -1 indicates that token is in home. create object for each token
+    tokenlist.append(Token(color[pid - 1], i, -1)) # -1 indicates that token is in home. create object for each token
+tokenlist1 = []
+
+for i in range(4):
+    tokenlist1.append(Token(color[pid - 1], i, -1))
 
 my_player = Player(pid, color[pid - 1], tokenlist)  # object of player 1
 
-opp_player = Player(3 - pid, color[2 - pid], tokenlist)  # object of player 1
+opp_player = Player(3 - pid, color[2 - pid], tokenlist1)  # object of player 1
 
 # print(my_player.haswon())
 
@@ -233,7 +237,7 @@ def defensive_move(my_player):
 # update board and return "Invalid" if not possible
 
 def updateboard(token_no, dice_value):
-    token_pos = my_player.ptokenlist[token_no].location + dice_value
+    token_pos = (my_player.ptokenlist[token_no].location + dice_value)%72
 
     my_player.ptokenlist[token_no].counter += dice_value
 
@@ -274,17 +278,20 @@ def invalidHomeLane(t, dice_value):
     t_color = t.color
     t_loc = t.getlocation()
     # get the color of the cell after loc+dice_value
-    if (Board[t_loc + dice_value].home_lane_flag == True):  # check whether after addition its a homeLane cell
-        if (Board[t_loc + dice_value].color != t_color):  # if the lane is of different color
-            return t_loc + dice_value + 5
+    if (Board[(t_loc + dice_value)%72].home_lane_flag == True):  # check whether after addition its a homeLane cell
+        if (Board[(t_loc + dice_value)%72].color != t_color):  # if the lane is of different color
+            return (t_loc + dice_value + 5)%72
         else:  # if its of the same color
-            return t_loc + dice_value
+            return (t_loc + dice_value)%72
+    else:
+        return (t_loc + dice_value)%72
 
 
 # returns true if the token t has reached finish state
 def check_finish_state(t):
     if (t.counter == 57):
         t.setlocation(-2)
+
         return True
     else:
         return False
@@ -312,6 +319,7 @@ def getBestPossibleMove(my_player, opp_player, dice_value):
     # TODO-where exactly to use this method
     # temp_index=invalidHomeLane(t, dice_value)       #stores the
     pc = getFastMovePiece(my_player)
+    #sys.stderr.write('token after getfast fun:' + str(pc.id))
     return pc
 
 
@@ -322,13 +330,13 @@ def getBestPossibleMove(my_player, opp_player, dice_value):
 REPEAT = False
 init_flag == False
 
-sys.stderr.write('<BEFORE WHILE>\n')
+#sys.stderr.write('<BEFORE WHILE>\n')
 
 while (not my_player.haswon()) and (not opp_player.haswon()):
 
     if REPEAT == False:
 
-        sys.stderr.write('<IN WHILE>\n')
+        #sys.stderr.write('<IN WHILE>\n')
 
         my_color = my_player.color  # returns the color of this player
         if pid == 2 and init_flag == False:
@@ -338,7 +346,10 @@ while (not my_player.haswon()) and (not opp_player.haswon()):
             move = sys.stdin.readline().strip()
             sys.stderr.write('pid 2 PRINT MOVE: ' + move + '\n')
 
-        # THis player's turn to play
+
+
+        # THis player's turn to
+        sys.stdout.flush()
         sys.stdout.write('<THROW>\n')
 
         sys.stdout.flush()
@@ -346,17 +357,17 @@ while (not my_player.haswon()) and (not opp_player.haswon()):
         move_list = []
         dice = sys.stdin.readline().strip()
         dice_value_list = []
-        sys.stderr.write('read from dice string ' + dice + '\n')
+        #sys.stderr.write('read from dice string ' + dice + '\n')
         i = 2
-        sys.stderr.write('read from dice string ')
+        #sys.stderr.write('read from dice string ')
         if 'SIXES' in dice:
-            sys.stdout.write('NA')
+            sys.stdout.write('NA\n')
             sys.stdout.flush()
 
         else:
             while i < len(dice.split(' ')):
                 dice_value_list.append(int(dice.split(' ')[i]))  # returns the numbers on dice
-                sys.stderr.write('::' + str(dice.split(' ')[i]) + '\n')
+                #sys.stderr.write('::' + str(dice.split(' ')[i]) + '\n')
                 i += 1
             for dice_value in dice_value_list:
 
@@ -371,7 +382,7 @@ while (not my_player.haswon()) and (not opp_player.haswon()):
 
                         my_player.ptokenlist[0].counter += 1
 
-                        sys.stderr.write('move sent: ' + str(dice_value) + '\n')
+                        #sys.stderr.write('move sent: ' + str(dice_value) + '\n')
                         move_list.append(my_color + str(0) + '_' + str(dice_value))
 
                         # sys.stdout.write(my_color+str(0)+'_'+str(dice_value)+'\n')
@@ -408,11 +419,15 @@ while (not my_player.haswon()) and (not opp_player.haswon()):
                         t = getBestPossibleMove(my_player, opp_player,
                                                 dice_value)  # returns the token  which should be moved
 
+
                         ind = invalidHomeLane(t, dice_value)  # returns the valid index at which t is to be placed
 
                         my_player.ptokenlist[t.id].setlocation(ind)  # set the token to start position+dicevalue
-                        my_player.ptokenlist[t.id].counter+=dice_value
-                        move_list.append(my_color + str(t.id) + '_' + str(dice_value) + '\n')
+                        my_player.ptokenlist[t.id].counter += dice_value
+                        if(t.counter == 57):
+                            my_player.win_pieces += 1
+
+                        move_list.append(my_color + str(t.id) + '_' + str(dice_value))
                         # sys.stdout.write(my_color + str(t.id) + '_'+str(dice_value) + '\n')
 
                         # update board
@@ -422,6 +437,7 @@ while (not my_player.haswon()) and (not opp_player.haswon()):
             str1 = ''
             for i in move_list:
                 str1 = str1 + str(i)
+            sys.stderr.write("my token pos are---"+str(my_player.ptokenlist[0].getlocation())+'---'+str(my_player.ptokenlist[1].getlocation())+'---'+str(my_player.ptokenlist[2].getlocation())+'---'+str(my_player.ptokenlist[3].getlocation())+'\n')
             sys.stderr.write('move_list' + str1)
             sys.stdout.write(str1)
             sys.stdout.flush()
@@ -437,26 +453,36 @@ while (not my_player.haswon()) and (not opp_player.haswon()):
 
         REPEAT = False
 
-    sys.stderr.write('<AFTER WHILW>\n')
+    #sys.stderr.write('<AFTER WHILW>\n')
 
     dice = sys.stdin.readline().strip()
+
 
     if dice != 'REPEAT':
 
         # sys.stderr.write('bot_msg_dice: ' + dice + '\n')
 
         move = sys.stdin.readline().strip()
+        #sys.stderr.write('bot_msg_move: ' + move + '\n')
 
-        # sys.stderr.write('bot_msg_move: ' + move + '\n')
         move_opp_list = move.split('<next>')
         for move1 in move_opp_list:
-            if (move1[1] in ['0', '1', '2', '3']):
-                loc = opp_player.ptokenlist[int(move1[1])].getlocation() + int(move1[3])
-                if (my_player.ptokenlist[int(move1[1])].color != Board[loc].color) and (Board[loc].color != "W"):
-                    opp_player.ptokenlist[int(move1[1])].setlocation((loc + 5) % 72)
 
+            if ((move1[1] =='0') or (move1[1] =='1') or (move1[1] =='2') or (move1[1] =='3')):
+                loc = (opp_player.ptokenlist[ord(move1[1])-48].getlocation() + ord(move1[3])-48)%72
+                if (opp_player.ptokenlist[ord(move1[1])-48].getlocation() == -1):
+                    opp_player.ptokenlist[ord(move1[1])-48].setlocation(startStates[opp_player.color])
+                else:
+                    if (opp_player.ptokenlist[ord(move1[1])-48].color != Board[loc].color) and (Board[loc].color != "W"):
+                        opp_player.ptokenlist[ord(move1[1])-48].setlocation((loc + 5) % 72)
+                    else:
+                        opp_player.ptokenlist[ord(move1[1]) - 48].setlocation((loc) % 72)
+        sys.stderr.write("opp token pos are---" + str(opp_player.ptokenlist[0].getlocation()) +'---'+ str(
+            opp_player.ptokenlist[1].getlocation()) +'---'+ str(opp_player.ptokenlist[2].getlocation())+'---' + str(
+            opp_player.ptokenlist[3].getlocation()) + '\n')
         if move.strip().split('<next>')[-1] == 'REPEAT':
             REPEAT = True
+
 
 
 
