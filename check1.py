@@ -1,4 +1,5 @@
 # TODO -To check time limit 120s
+#If you need 1 to finish the token and also 1 token is inside home state-then what should be done
 
 
 import sys
@@ -286,10 +287,11 @@ def check_finish_state(t):
 def valid_move (t,dice_value):
 
     temp_loc = invalidHomeLane(t,dice_value)
-    for i in range(4):
-        if (i != t.id):
-            if(temp_loc == my_player.ptokenlist[i].getlocation() ):
-                return False
+    if(Board[temp_loc].safe_state_flag == False):
+        for i in range(4):
+            if (i != t.id):
+                if(temp_loc == my_player.ptokenlist[i].getlocation() ):
+                    return False
     return True
 
 #returns list of token of my_player which are inside home lane
@@ -323,6 +325,20 @@ def defensive_move(my_player,dice_value):
                     if valid_move(my_player.ptokenlist[i], dice_value):
                         return my_player.ptokenlist[i]
     return tk
+#returns token which can knock off other's token if mylocation+dice=other's token location
+def aggresive_move(my_player,dice_value):
+    sys.stderr.write('?????   GOING IN Aggressive   ????' + '\n')
+    for i in range(4):
+        my_loc=my_player.ptokenlist[i].getlocation()
+        if (my_loc == -2 or my_loc == -1 or Board[my_loc].home_lane_flag==True):
+            continue
+        for j in range(4):
+            correct_ind=invalidHomeLane(my_player.ptokenlist[i],dice_value) #returns the correct index of mytoken if required
+            #checks if the other's token is not in safe state
+            if((Board[correct_ind].safe_state_flag==False) and (correct_ind==opp_player.ptokenlist[j].getlocation())):
+                return my_player.ptokenlist[i]
+    return None
+
 
 
 
@@ -330,6 +346,7 @@ def defensive_move(my_player,dice_value):
 # TODO
 # returns token which is closer to homelane
 def getFastMovePiece(my_player,dice_value):
+    sys.stderr.write('$$$   GOING IN Fast move $$$$$' + '\n')
     min_diff = 100
     pc =None
     for i in range(4):
@@ -346,7 +363,9 @@ def getFastMovePiece(my_player,dice_value):
 
 
 def getBestPossibleMove(my_player, opp_player, dice_value):
-    # TODO-where exactly to use this method
+#Priority Order -First try if any in home lane-Defensive-Aggressive-Fast Move
+
+   #Checks if any token is inside home lane
     pc = None
     # temp_index=invalidHomeLane(t, dice_value)       #stores the
     hl_pc_list = inHomeLane(my_player)  #returns list of token which are inside home lane
@@ -365,9 +384,17 @@ def getBestPossibleMove(my_player, opp_player, dice_value):
         if(tk != -1):
             if (my_player.ptokenlist[tk].counter+dice_value < 57):
                 return my_player.ptokenlist[tk] #returns token which is to be moved
+
+    #2nd-check if I need to defend from opponent
     pc=defensive_move(my_player,dice_value)
+    #3rd-check if i can knock off opponent's token
+    if (pc ==None):
+        pc=aggresive_move(my_player,dice_value)
+
+    #Otherwise move the one closest to finish
     if(pc == None):
         pc = getFastMovePiece(my_player,dice_value)
+
     sys.stderr.write('PC @@@----------------' + str(pc)+'\n')
     return pc
 
@@ -501,6 +528,7 @@ while (not my_player.haswon()) and (not opp_player.haswon()):
                                 opp_loc =opp_player.ptokenlist[oppid].getlocation()
                                 if(ind == opp_loc and opp_loc != -2 and Board[ind].safe_state_flag == False and opp_loc !=-1):
                                     opp_player.ptokenlist[oppid].setlocation(-1)
+
 
                             if(t.counter == 57):
                                 my_player.win_pieces += 1
