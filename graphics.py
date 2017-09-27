@@ -9,10 +9,25 @@ pygame.init()
 # set token variables like color,id,location
 
 def graphics(player_1, player_2, gm ):
+	COLOR1=(0,0,0)
+	COLOR2=(0,0,0)
 	screen.fill(WHITE)
+	string=''
+
+	myfont = pygame.font.SysFont('Comic Sans MS', 35)
+	myfont_d = pygame.font.SysFont('Comic Sans MS', 50)
+	for i in dice_val_graph:
+		string =string+ str(i)+'  '
+	textsurface = myfont.render('Dice Move', False, (0, 0, 0))
+	textsurface1=myfont_d.render(string, False, (0, 0, 0))
+	textsurface2 = myfont_d.render("Player No. " + str(pid) , False, (0, 0, 0))
+	screen.blit(textsurface2,(750, 60))
+	#screen.blit(textsurface, (720,320))
+	#screen.blit(textsurface1, (750, 360))
+
 	pygame.draw.rect(screen, BLACK , [50,50,604,604],1)
 	pygame.draw.rect(screen, BLACK , [52,52,600,600],1)
-    #pygame.draw.rect(screen, BLACK, [700,300,150,150],1)
+	#pygame.draw.rect(screen, BLACK, [700,300,150,150],3)
 
 	#left boxes (RED)
 	pygame.draw.rect(screen, BLACK , [54,292, 40,40],1)
@@ -166,6 +181,8 @@ def graphics(player_1, player_2, gm ):
 	B_I=[{'x':115,'y': 475},{'x':185,'y': 475},{'x':115,'y': 540},{'x':185,'y': 540}]
 	G_I=[{'x':475,'y': 120},{'x':475,'y': 180},{'x':540,'y': 120},{'x':540,'y': 180}]
 	Y_I=[{'x':475,'y': 475},{'x':540,'y': 475},{'x':475,'y': 540},{'x':540,'y': 540}]
+	M_F= [{'x': 720, 'y': 115}, {'x': 770, 'y': 115}, {'x': 820, 'y': 115}, {'x': 850, 'y': 115}]
+	O_F= [{'x': 720, 'y': 175}, {'x': 770, 'y': 175}, {'x': 820, 'y': 175}, {'x': 850, 'y': 175}]
 
 	position=[{'x':96,'y':294},{'x':136,'y':294},{'x':176,'y':294},{'x':216,'y':294},{'x':256,'y':294},{'x':297,'y':254},
               {'x':297,'y':216},{'x':297,'y':176},{'x':297,'y':136},{'x':297,'y':96},{'x':297,'y':56},{'x':337,'y':56},
@@ -182,14 +199,18 @@ def graphics(player_1, player_2, gm ):
               ]
 
 	for p in range(4):
+		screen.blit(textsurface, (720, 320))
+		screen.blit(textsurface1, (750, 360))
 		if(gm==0):
 			if (my_player.color=='R'):
+				COLOR1=COLOR_R
+				COLOR2=COLOR_Y
 				if(my_player.ptokenlist[p].getlocation()==-1):
 					coins[p]['x']=R_I[p]['x']
 					coins[p]['y']=R_I[p]['y']
 				elif (my_player.ptokenlist[p].getlocation()==-2):
-					coins[p]['x'] = R_I[p]['x']
-					coins[p]['y'] = R_I[p]['y']
+					coins[p]['x'] = M_F[p]['x']
+					coins[p]['y'] = M_F[p]['y']
 				else:
 					coins[p]['x']=position[my_player.ptokenlist[p].getlocation()]['x']
 					coins[p]['y']=position[my_player.ptokenlist[p].getlocation()]['y']
@@ -199,18 +220,20 @@ def graphics(player_1, player_2, gm ):
 					coins_o[p]['x']=Y_I[p]['x']
 					coins_o[p]['y']=Y_I[p]['y']
 				elif(opp_player.ptokenlist[p].getlocation()==-2):
-					coins_o[p]['x']=Y_I[p]['x']
-					coins_o[p]['y']=Y_I[p]['y']
+					coins_o[p]['x']=O_F[p]['x']
+					coins_o[p]['y']=O_F[p]['y']
 				else:
 					coins_o[p]['x']=position[opp_player.ptokenlist[p].getlocation()]['x']
 					coins_o[p]['y']=position[opp_player.ptokenlist[p].getlocation()]['y']
 			else:
+				COLOR1 = COLOR_Y
+				COLOR2 = COLOR_R
 				if (my_player.ptokenlist[p].getlocation() == -1):
 					coins[p]['x'] = Y_I[p]['x']
 					coins[p]['y'] = Y_I[p]['y']
 				elif (my_player.ptokenlist[p].getlocation() == -2):
-					coins[p]['x'] = Y_I[p]['x']
-					coins[p]['y'] = Y_I[p]['y']
+					coins[p]['x'] = O_F[p]['x']
+					coins[p]['y'] = O_F[p]['y']
 				else:
 					coins[p]['x'] = position[my_player.ptokenlist[p].getlocation()]['x']
 					coins[p]['y'] = position[my_player.ptokenlist[p].getlocation()]['y']
@@ -219,19 +242,21 @@ def graphics(player_1, player_2, gm ):
 					coins_o[p]['x'] = R_I[p]['x']
 					coins_o[p]['y'] = R_I[p]['y']
 				elif (opp_player.ptokenlist[p].getlocation() == -2):
-					coins_o[p]['x'] = R_I[p]['x']
-					coins_o[p]['y'] = R_I[p]['y']
+					coins_o[p]['x'] = M_F[p]['x']
+					coins_o[p]['y'] = M_F[p]['y']
 				else:
 					coins_o[p]['x'] = position[opp_player.ptokenlist[p].getlocation()]['x']
 					coins_o[p]['y'] = position[opp_player.ptokenlist[p].getlocation()]['y']
 		else:
 			if (my_player.color=='B'):
+				COLOR1 = COLOR_B
+				COLOR2 = COLOR_G
 				if (my_player.ptokenlist[p].getlocation() == -1):
 					coins[p]['x'] = B_I[p]['x']
 					coins[p]['y'] = B_I[p]['y']
 				elif (my_player.ptokenlist[p].getlocation() == -2):
-					coins[p]['x'] = B_I[p]['x']
-					coins[p]['y'] = B_I[p]['y']
+					coins[p]['x'] = M_F[p]['x']
+					coins[p]['y'] = M_F[p]['y']
 				else:
 					coins[p]['x'] = position[my_player.ptokenlist[p].getlocation()]['x']
 					coins[p]['y'] = position[my_player.ptokenlist[p].getlocation()]['y']
@@ -240,18 +265,20 @@ def graphics(player_1, player_2, gm ):
 					coins_o[p]['x'] = G_I[p]['x']
 					coins_o[p]['y'] = G_I[p]['y']
 				elif (opp_player.ptokenlist[p].getlocation() == -2):
-					coins_o[p]['x'] = G_I[p]['x']
-					coins_o[p]['y'] = G_I[p]['y']
+					coins_o[p]['x'] = O_F[p]['x']
+					coins_o[p]['y'] = O_F[p]['y']
 				else:
 					coins_o[p]['x'] = position[opp_player.ptokenlist[p].getlocation()]['x']
 					coins_o[p]['y'] = position[opp_player.ptokenlist[p].getlocation()]['y']
 			else:
+				COLOR1 = COLOR_G
+				COLOR2 = COLOR_B
 				if (my_player.ptokenlist[p].getlocation() == -1):
 					coins[p]['x'] = G_I[p]['x']
 					coins[p]['y'] = G_I[p]['y']
 				elif (my_player.ptokenlist[p].getlocation() == -2):
-					coins[p]['x'] = G_I[p]['x']
-					coins[p]['y'] = G_I[p]['y']
+					coins[p]['x'] = O_F[p]['x']
+					coins[p]['y'] = O_F[p]['y']
 				else:
 					coins[p]['x'] = position[my_player.ptokenlist[p].getlocation()]['x']
 					coins[p]['y'] = position[my_player.ptokenlist[p].getlocation()]['y']
@@ -260,13 +287,14 @@ def graphics(player_1, player_2, gm ):
 					coins_o[p]['x'] = B_I[p]['x']
 					coins_o[p]['y'] = B_I[p]['y']
 				elif (opp_player.ptokenlist[p].getlocation() == -2):
-					coins_o[p]['x'] = B_I[p]['x']
-					coins_o[p]['y'] = B_I[p]['y']
+					coins_o[p]['x'] = M_F[p]['x']
+					coins_o[p]['y'] = M_F[p]['y']
 				else:
 					coins_o[p]['x'] = position[opp_player.ptokenlist[p].getlocation()]['x']
 					coins_o[p]['y'] = position[opp_player.ptokenlist[p].getlocation()]['y']
 		pygame.draw.ellipse(screen, COLOR1, [coins[p]['x'],coins[p]['y'],35,35],0)
 		pygame.draw.ellipse(screen, COLOR2, [coins_o[p]['x'],coins_o[p]['y'],35,35],0)
+
 	pygame.display.update()
 	time.sleep(1)
 	pygame.display.flip()
@@ -620,12 +648,14 @@ BLACK=(0,0,0)
 GREEN=(0,255,0)
 BLUE=(0,0,255)
 YELLOW=(255,255,0)
-COLOR1=(78,21,21)
-COLOR2=(8,74,13)
+COLOR_R=(141,23,23)
+COLOR_B=(21,25,142)
+COLOR_G=(9,129,0)
+COLOR_Y=(247,148,0)
 coins=[{'x':0,'y':0},{'x':0,'y':0},{'x':0,'y':0},{'x':0,'y':0}]
 coins_o=[{'x':0,'y':0},{'x':0,'y':0},{'x':0,'y':0},{'x':0,'y':0}]
 screen = pygame.display.set_mode(size)
-pygame.display.set_caption("Assignment-2 :Ludo Bot")
+pygame.display.set_caption("Assignment-2 :Ludo Bot"+"--Player No.--"+str(pid))
  
 # Used to manage how fast the screen updates
 clocktime = pygame.time.Clock()
@@ -635,42 +665,40 @@ while alive:
         if event.type == pygame.QUIT: 
             done = True
             pygame.quit()
-
 	REPEAT = False
-	init_flag == False
-	flag_NA = 0
+	init_flag = False
+	#flag_NA = 0
 	#sys.stderr.write('<BEFORE WHILE>\n')
 
 	while (not my_player.haswon()) and (not opp_player.haswon()):
-	    flag_NA = 0
-	    if REPEAT == False:
+		flag_NA = 0
+		if REPEAT == False:
 
 		#sys.stderr.write('<IN WHILE>\n')
 
 		my_color = my_player.color  # returns the color of this player
 		if pid == 2 and init_flag == False:
-		    init_flag = True
-		    dice = sys.stdin.readline().strip()
-		    sys.stderr.write('pid 2 PRINT DICE: ' + dice + '\n')
-		    move = sys.stdin.readline().strip()
+			init_flag = True
+			dice = sys.stdin.readline().strip()
+			sys.stderr.write('pid 2 PRINT DICE: ' + dice + '\n')
+			move = sys.stdin.readline().strip()
 
-		    move_opp_list1 = move.split('<next>')
-		    for move2 in move_opp_list1:
-
-		        if ((move2[1] == '0') or (move2[1] == '1') or (move2[1] == '2') or (move2[1] == '3')):
-		            loc = (opp_player.ptokenlist[ord(move2[1]) - 48].getlocation() + ord(move2[3]) - 48) % 72
-		            if (loc == stopStates[opp_player.color] + 1):
-		                opp_player.ptokenlist[ord(move2[1]) - 48].setlocation(-2)
-		            else:
-		                if (opp_player.ptokenlist[ord(move2[1]) - 48].getlocation() == -1):
-		                    opp_player.ptokenlist[ord(move2[1]) - 48].setlocation(startStates[opp_player.color])
-		                else:
-		                    if (opp_player.ptokenlist[ord(move2[1]) - 48].color != Board[loc].color) and (
-		                        Board[loc].color != "W"):
-		                        opp_player.ptokenlist[ord(move2[1]) - 48].setlocation((loc + 5) % 72)
-		                    else:
-		                        opp_player.ptokenlist[ord(move2[1]) - 48].setlocation((loc) % 72)
-		    sys.stderr.write('pid 2 PRINT MOVE: ' + move + '\n')
+			move_opp_list1 = move.split('<next>')
+			for move2 in move_opp_list1:
+				if ((move2[1] == '0') or (move2[1] == '1') or (move2[1] == '2') or (move2[1] == '3')):
+					loc = (opp_player.ptokenlist[ord(move2[1]) - 48].getlocation() + ord(move2[3]) - 48) % 72
+					if (loc == stopStates[opp_player.color] + 1):
+						opp_player.ptokenlist[ord(move2[1]) - 48].setlocation(-2)
+					else:
+						if (opp_player.ptokenlist[ord(move2[1]) - 48].getlocation() == -1):
+							opp_player.ptokenlist[ord(move2[1]) - 48].setlocation(startStates[opp_player.color])
+						else:
+							if (opp_player.ptokenlist[ord(move2[1]) - 48].color != Board[loc].color) and (
+								Board[loc].color != "W"):
+								opp_player.ptokenlist[ord(move2[1]) - 48].setlocation((loc + 5) % 72)
+							else:
+								opp_player.ptokenlist[ord(move2[1]) - 48].setlocation((loc) % 72)
+			sys.stderr.write('pid 2 PRINT MOVE: ' + move + '\n')
 
 
 
@@ -683,17 +711,19 @@ while alive:
 		move_list = []
 		dice = sys.stdin.readline().strip()
 		dice_value_list = []
+		dice_val_graph = []
 		#sys.stderr.write('read from dice string ' + dice + '\n')
 		i = 2
 		#sys.stderr.write('read from dice string ')
 		if 'SIXES' in dice:
-		    sys.stdout.write('NA\n')
-		    sys.stdout.flush()
+			sys.stdout.write('NA\n')
+			sys.stdout.flush()
 
 		else:
-		    while i < len(dice.split(' ')):
-		        dice_value_list.append(int(dice.split(' ')[i]))  # returns the numbers on dice
-		        #sys.stderr.write('::' + str(dice.split(' ')[i]) + '\n')
+			while i < len(dice.split(' ')):
+				dice_val_graph.append(int(dice.split(' ')[i]))
+				dice_value_list.append(int(dice.split(' ')[i]))
+				#sys.stderr.write('::' + str(dice.split(' ')[i]) + '\n')
 		        i += 1
 		    for dice_value in dice_value_list:
 
@@ -827,6 +857,7 @@ while alive:
 
 		move_opp_list = move.split('<next>')
 		for move1 in move_opp_list:
+			dice_val_graph.append(int(move.split('<next>')[i]))
 
 		    if ((move1[1] =='0') or (move1[1] =='1') or (move1[1] =='2') or (move1[1] =='3')):
 		        loc = (opp_player.ptokenlist[ord(move1[1])-48].getlocation() + ord(move1[3])-48)%72
@@ -848,3 +879,11 @@ while alive:
 
 
 		graphics(my_player, opp_player, gm)
+
+
+
+
+
+
+
+
