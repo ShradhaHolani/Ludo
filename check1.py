@@ -1,6 +1,5 @@
-# TODO -to mark home lane in safe state or not
-# call checkvalid fn as soon as u enter getBestPossibleMove,and use the new location further,instead of calling it after the Getbest...fn
-# handle stacking
+# TODO -To check time limit 120s
+
 
 import sys
 
@@ -144,7 +143,7 @@ for i in range(9, 12, 1):
 
 for i in range(12, 17, 1):  # home lane of green
 
-    Board.append(Cell("G", False, True, False))
+    Board.append(Cell("G", True, True, False))
 
 Board.append(Cell("W", False, False, False))
 
@@ -162,7 +161,7 @@ for i in range(27, 30, 1):  # white of yellow
 
 for i in range(30, 35, 1):  # home lane of yellow
 
-    Board.append(Cell("Y", False, True, False))
+    Board.append(Cell("Y", True, True, False))
 
 Board.append(Cell("W", False, False, False))
 
@@ -180,7 +179,7 @@ for i in range(45, 48, 1):  # white
 
 for i in range(48, 53, 1):  # home lane of blue
 
-    Board.append(Cell("B", False, True, False))
+    Board.append(Cell("B", True, True, False))
 
 Board.append(Cell("W", False, False, False))
 
@@ -198,7 +197,7 @@ for i in range(63, 66, 1):  # white
 
 for i in range(66, 71, 1):  # home lane of red
 
-    Board.append(Cell("R", False, True, False))
+    Board.append(Cell("R", True, True, False))
 
 Board.append(Cell("W", False, False, False))
 
@@ -210,24 +209,6 @@ Board.append(Cell("W", False, False, False))
 # print(item.color, item.home_lane_flag)
 
 
-def defensive_move(my_player):
-    for i in range(4):
-        my_loc = my_player.ptokenlist[i].getlocation()
-        if my_loc == 57:
-            continue
-        if Board[my_loc].safe_state_flag == True:
-            continue
-        for j in range(6):
-            new_loc = my_loc - j
-            if (new_loc < 0):
-                new_loc = new_loc + 72
-            if(Board[new_loc].home_lane_flag == True):
-                new_loc = new_loc -5
-            for k in range(4):
-                opp_loc =opp_player.ptokenlist[k].getlocation()
-                if (opp_loc == new_loc):
-                    return i
-    return -1
 
 
 
@@ -276,6 +257,9 @@ def invalidHomeLane(t, dice_value):
     # gets the location and color of this token
     t_color = t.color
     t_loc = t.getlocation()
+    #if token located at startstate of any home lene -1 and dice_value = 6 , do not enter home lane
+    if((t_loc== 11 or t_loc== 29 or t_loc== 47 or t_loc== 65 ) and(dice_value == 6) ):
+        return (t_loc + dice_value + 5) % 72
     # get the color of the cell after loc+dice_value
     if (Board[(t_loc + dice_value)%72].home_lane_flag == True):  # check whether after addition its a homeLane cell
         if (Board[(t_loc + dice_value)%72].color != t_color):  # if the lane is of different color
@@ -298,6 +282,16 @@ def check_finish_state(t):
 
 # algo starts here..................................
 
+
+def valid_move (t,dice_value):
+
+    temp_loc = invalidHomeLane(t,dice_value)
+    for i in range(4):
+        if (i != t.id):
+            if(temp_loc == my_player.ptokenlist[i].getlocation() ):
+                return False
+    return True
+
 #returns list of token of my_player which are inside home lane
 def inHomeLane(my_player):
 
@@ -306,6 +300,31 @@ def inHomeLane(my_player):
         if(my_player.ptokenlist[i].getlocation()!=-2 and my_player.ptokenlist[i].getlocation()!=-1 and my_player.ptokenlist[i].color == Board[my_player.ptokenlist[i].getlocation()].color):
             l.append(i)
     return l
+
+#returns token which is located in range(1,6) ahead of opposite color token
+def defensive_move(my_player,dice_value):
+    sys.stderr.write('@@@-GOING IN DEFENSIVE@@@--'+'\n')
+    tk =None
+    for i in range(4):
+        my_loc = my_player.ptokenlist[i].getlocation()
+        if (my_loc == -2 or my_loc == -1):
+            continue
+        if Board[my_loc].safe_state_flag == True:
+            continue
+        for j in range(6):
+            new_loc = my_loc - j
+            if (new_loc < 0):
+                new_loc = new_loc + 72
+            if(Board[new_loc].home_lane_flag == True):
+                new_loc = new_loc -5
+            for k in range(4):
+                opp_loc =opp_player.ptokenlist[k].getlocation()
+                if (opp_loc == new_loc):
+                    if valid_move(my_player.ptokenlist[i], dice_value):
+                        return my_player.ptokenlist[i]
+    return tk
+
+
 
 
 # TODO
@@ -318,10 +337,11 @@ def getFastMovePiece(my_player,dice_value):
         if(my_player.ptokenlist[i].counter+dice_value > 57):
             continue
         if (l != -1 and l != -2 and (my_player.ptokenlist[i].color != Board[my_player.ptokenlist[i].getlocation()].color)):  # do this only if the piece is out or not and not in home lane
-            diff = (startHomeLane[my_player.color] - l) % 72
-            if (diff < min_diff):
-                min_diff = diff
-                pc = my_player.ptokenlist[i]
+            if valid_move(my_player.ptokenlist[i],dice_value):
+                diff = (startHomeLane[my_player.color] - l) % 72
+                if (diff < min_diff):
+                    min_diff = diff
+                    pc = my_player.ptokenlist[i]
     return pc
 
 
@@ -343,10 +363,12 @@ def getBestPossibleMove(my_player, opp_player, dice_value):
                        tk = i #stores token id which is closest to finish state
                        max =temp_loc     #loc closest to finish state
         if(tk != -1):
-            return my_player.ptokenlist[tk] #returns token which is to be moved
-
-    pc = getFastMovePiece(my_player,dice_value)
-    sys.stderr.write('PC -------------------' + str(pc)+'\n')
+            if (my_player.ptokenlist[tk].counter+dice_value < 57):
+                return my_player.ptokenlist[tk] #returns token which is to be moved
+    pc=defensive_move(my_player,dice_value)
+    if(pc == None):
+        pc = getFastMovePiece(my_player,dice_value)
+    sys.stderr.write('PC @@@----------------' + str(pc)+'\n')
     return pc
 
 
@@ -415,6 +437,7 @@ while (not my_player.haswon()) and (not opp_player.haswon()):
                 i += 1
             for dice_value in dice_value_list:
 
+
                 if (my_player.out_pieces == 0):  # all the 4 tokens are inside home state
 
                     if (dice_value == 6 or dice_value == 1):
@@ -470,8 +493,15 @@ while (not my_player.haswon()) and (not opp_player.haswon()):
                         else:
                             ind = invalidHomeLane(t, dice_value)  # returns the valid index at which t is to be placed
 
+
                             my_player.ptokenlist[t.id].setlocation(ind)  # set the token to start position+dicevalue
                             my_player.ptokenlist[t.id].counter += dice_value
+                            # check if "t" cuts other player token
+                            for oppid in range(4):
+                                opp_loc =opp_player.ptokenlist[oppid].getlocation()
+                                if(ind == opp_loc and opp_loc != -2 and Board[ind].safe_state_flag == False and opp_loc !=-1):
+                                    opp_player.ptokenlist[oppid].setlocation(-1)
+
                             if(t.counter == 57):
                                 my_player.win_pieces += 1
                                 my_player.ptokenlist[t.id].setlocation(-2)
@@ -513,11 +543,11 @@ while (not my_player.haswon()) and (not opp_player.haswon()):
                 sys.stderr.write('move_list' + str1)
                 sys.stdout.write(str1)'''
             sys.stdout.flush()
-            sys.stderr.write("my token pos are---" + str(my_player.ptokenlist[0].getlocation()) + '---' + str(
-                my_player.ptokenlist[1].getlocation()) + '---' + str(
-                my_player.ptokenlist[2].getlocation()) + '---' + str(my_player.ptokenlist[3].getlocation()) + '\n')
-            sys.stderr.write("my token counter are:::" + str(my_player.ptokenlist[0].counter) + "---" + str(
-                my_player.ptokenlist[1].counter) + "---" + str(my_player.ptokenlist[2].counter) + "---" + str(
+            sys.stderr.write("my token pos are>>>" + str(my_player.ptokenlist[0].getlocation()) + '>>>' + str(
+                my_player.ptokenlist[1].getlocation()) + '>>>' + str(
+                my_player.ptokenlist[2].getlocation()) + '>>>' + str(my_player.ptokenlist[3].getlocation()) + '\n')
+            sys.stderr.write("my token counter are:::" + str(my_player.ptokenlist[0].counter) + ">>>" + str(
+                my_player.ptokenlist[1].counter) + ">>>" + str(my_player.ptokenlist[2].counter) + ">>>" + str(
                 my_player.ptokenlist[3].counter) + "\n")
 
 
@@ -550,7 +580,12 @@ while (not my_player.haswon()) and (not opp_player.haswon()):
                 loc = (opp_player.ptokenlist[ord(move1[1])-48].getlocation() + ord(move1[3])-48)%72
                 if (loc == stopStates[opp_player.color]+1):
                     opp_player.ptokenlist[ord(move1[1])-48].setlocation(-2)
+                #if opp token was at starthome lane -1 and dice value =6 add 5
+                elif((loc== 17 or loc== 35 or loc== 53 or loc== 71 ) and( ord(move1[3])-48== 6) ):
+                    opp_player.ptokenlist[ord(move1[1]) - 48].setlocation((loc + 5) % 72)
+
                 else:
+
                     if (opp_player.ptokenlist[ord(move1[1])-48].getlocation() == -1):
                         opp_player.ptokenlist[ord(move1[1])-48].setlocation(startStates[opp_player.color])
                     else:
@@ -558,8 +593,14 @@ while (not my_player.haswon()) and (not opp_player.haswon()):
                             opp_player.ptokenlist[ord(move1[1])-48].setlocation((loc + 5) % 72)
                         else:
                             opp_player.ptokenlist[ord(move1[1]) - 48].setlocation((loc) % 72)
-        sys.stderr.write("opp token pos are---" + str(opp_player.ptokenlist[0].getlocation()) +'---'+ str(
-            opp_player.ptokenlist[1].getlocation()) +'---'+ str(opp_player.ptokenlist[2].getlocation())+'---' + str(
+                loc = opp_player.ptokenlist[ord(move1[1])-48].getlocation()
+                for myid in range(4):
+                    if(my_player.ptokenlist[myid].getlocation() == loc and loc != -2 and Board[loc].safe_state_flag == False):
+                        my_player.ptokenlist[myid].setlocation(-1)
+                        my_player.ptokenlist[myid].counter = 0
+                        my_player.out_pieces = my_player.out_pieces -1
+        sys.stderr.write("opp token pos are>>>" + str(opp_player.ptokenlist[0].getlocation()) +'>>>'+ str(
+            opp_player.ptokenlist[1].getlocation()) +'>>>'+ str(opp_player.ptokenlist[2].getlocation())+'>>>' + str(
             opp_player.ptokenlist[3].getlocation()) + '\n')
         if move.strip().split('<next>')[-1] == 'REPEAT':
             REPEAT = True
