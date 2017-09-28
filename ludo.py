@@ -3,11 +3,12 @@
 
 import pygame,sys,time
 import random
+import traceback
 pygame.init()
 
 # set token variables like color,id,location
 
-def graphics(player_1, player_2, gm ):
+def graphics(player_1, player_2, gm, win ):
 	COLOR1=(0,0,0)
 	COLOR2=(0,0,0)
 	screen.fill(WHITE)
@@ -20,6 +21,13 @@ def graphics(player_1, player_2, gm ):
 	textsurface = myfont.render('Dice Move', False, (0, 0, 0))
 	textsurface1=myfont_d.render(string, False, (0, 0, 0))
 	textsurface2 = myfont_d.render("Player No. " + str(pid) , False, (0, 0, 0))
+	textsurface3 = myfont_d.render("YOU WIN", False, (0, 0, 0))
+	textsurface4=myfont_d.render("YOU LOST", False, (0, 0, 0))
+	if(win==1):
+		if (my_player.ptokenlist[0].getlocation()==-2 and my_player.ptokenlist[1].getlocation()==-2 and my_player.ptokenlist[2].getlocation()==-2 and my_player.ptokenlist[3].getlocation()==-2 ):
+			screen.blit(textsurface3,(750,500))
+		else:
+			screen.blit(textsurface4, (750, 500))
 	screen.blit(textsurface2,(750, 60))
 	#screen.blit(textsurface, (720,320))
 	#screen.blit(textsurface1, (750, 360))
@@ -183,23 +191,23 @@ def graphics(player_1, player_2, gm ):
 	M_F= [{'x': 720, 'y': 115}, {'x': 770, 'y': 115}, {'x': 820, 'y': 115}, {'x': 860, 'y': 115}]
 	O_F= [{'x': 720, 'y': 175}, {'x': 770, 'y': 175}, {'x': 820, 'y': 175}, {'x': 860, 'y': 175}]
 
-	position=[{'x':96,'y':294, 'c':0,'m':0,'o':0},{'x':136,'y':294,'c':0, 'm':0,'o':0},{'x':176,'y':294, 'c':0, 'm':0,'o':0},{'x':216,'y':294,'c':0, 'm':0,'o':0},{'x':256,'y':294, 'c':0, 'm':0,'o':0},{'x':297,'y':254, 'c':0, 'm':0,'o':0},
-              {'x':297,'y':216,'c':0, 'm':0,'o':0},{'x':297,'y':176,'c':0, 'm':0,'o':0},{'x':297,'y':136,'c':0, 'm':0,'o':0},{'x':297,'y':96,'c':0, 'm':0,'o':0},{'x':297,'y':56,'c':0, 'm':0,'o':0},{'x':337,'y':56, 'c':0, 'm':0,'o':0},
-              {'x':337,'y':96,'c':0, 'm':0,'o':0},{'x':337,'y':136, 'c':0, 'm':0,'o':0},{'x':337,'y':176, 'c':0, 'm':0,'o':0},{'x':337,'y':216, 'c':0, 'm':0,'o':0},{'x':337,'y':254, 'c':0, 'm':0,'o':0},{'x': 377,'y':56, 'c':0, 'm':0,'o':0},
-              {'x':377,'y':96, 'c':0, 'm':0,'o':0},{'x':377,'y':136, 'c':0, 'm':0,'o':0},{'x':377,'y':176,'c':0, 'm':0,'o':0},{'x':377,'y':216, 'c':0, 'm':0,'o':0},{'x':377,'y':254, 'c':0, 'm':0,'o':0},{'x':416,'y': 294, 'c':0, 'm':0,'o':0},
-              {'x':456,'y':294, 'c':0, 'm':0,'o':0},{'x':496,'y':294,'c':0, 'm':0,'o':0},{'x':536,'y':294, 'c':0, 'm':0,'o':0},{'x':576,'y':294, 'c':0, 'm':0,'o':0},{'x': 616, 'y':294, 'c':0, 'm':0,'o':0}, {'x':616,'y':334, 'c':0, 'm':0,'o':0},
-              {'x':576,'y':334, 'c':0, 'm':0,'o':0},{'x':536,'y':334, 'c':0, 'm':0,'o':0},{'x':496,'y':334, 'c':0, 'm':0,'o':0},{'x':456,'y':334, 'c':0, 'm':0,'o':0},{'x':416,'y':334, 'c':0, 'm':0,'o':0},{'x':616, 'y':374, 'c':0, 'm':0,'o':0},
-              {'x':576,'y':374, 'c':0, 'm':0,'o':0},{'x':536,'y':374, 'c':0, 'm':0,'o':0},{'x':496,'y': 374, 'c':0, 'm':0,'o':0},{'x':456,'y':374, 'c':0, 'm':0,'o':0},{'x':416,'y':374, 'c':0, 'm':0,'o':0}, {'x':377,'y':416, 'c':0, 'm':0,'o':0},
-              {'x':377,'y': 456, 'c':0, 'm':0,'o':0},{'x':377,'y':496, 'c':0, 'm':0,'o':0},{'x':377,'y':536, 'c':0, 'm':0,'o':0},{'x':377,'y':576, 'c':0, 'm':0,'o':0},{'x':377,'y':614, 'c':0, 'm':0,'o':0},{'x': 337, 'y': 614, 'c':0, 'm':0,'o':0},
-              {'x': 337,'y':576, 'c':0, 'm':0,'o':0}, {'x': 337, 'y': 536, 'c':0, 'm':0,'o':0}, {'x':337, 'y':496, 'c':0, 'm':0,'o':0}, {'x':337, 'y':456, 'c':0, 'm':0,'o':0},{'x': 337, 'y':416, 'c':0, 'm':0,'o':0}, {'x': 297, 'y': 614, 'c':0, 'm':0,'o':0},
-              {'x': 297, 'y': 576, 'c':0, 'm':0,'o':0}, {'x': 297, 'y':536, 'c':0, 'm':0,'o':0}, {'x': 297, 'y':496, 'c':0, 'm':0,'o':0}, {'x': 297, 'y':456, 'c':0, 'm':0,'o':0},{'x': 297, 'y':416, 'c':0, 'm':0,'o':0}, {'x': 256, 'y':374, 'c':0, 'm':0,'o':0},
-              {'x': 216, 'y':374, 'c':0, 'm':0,'o':0}, {'x': 176, 'y':374, 'c':0, 'm':0,'o':0}, {'x': 136, 'y':374, 'c':0, 'm':0,'o':0}, {'x': 96, 'y':374, 'c':0, 'm':0,'o':0},{'x': 56, 'y': 374, 'c':0, 'm':0,'o':0}, {'x':56,'y':334, 'c':0, 'm':0,'o':0},
-              {'x': 96, 'y': 334, 'c':0, 'm':0,'o':0}, {'x': 136, 'y':334, 'c':0, 'm':0,'o':0}, {'x': 176, 'y':334, 'c':0, 'm':0,'o':0}, {'x': 216, 'y':334, 'c':0, 'm':0,'o':0},{'x':256, 'y':334, 'c':0, 'm':0,'o':0}, {'x': 56, 'y':294, 'c':0, 'm':0,'o':0}
+	position=[{'x':96,'y':294, 'c':0,'d':0},{'x':136,'y':294,'c':0, 'd':0},{'x':176,'y':294, 'c':0, 'd':0},{'x':216,'y':294,'c':0,'d':0},{'x':256,'y':294, 'c':0,'d':0},{'x':297,'y':254, 'c':0,'d':0},
+              {'x':297,'y':216,'c':0, 'd':0},{'x':297,'y':176,'c':0,'d':0},{'x':297,'y':136,'c':0,'d':0},{'x':297,'y':96,'c':0,'d':0},{'x':297,'y':56,'c':0, 'd':0},{'x':337,'y':56, 'c':0,'d':0},
+              {'x':337,'y':96,'c':0, 'd':0},{'x':337,'y':136, 'c':0,'d':0},{'x':337,'y':176, 'c':0,'d':0},{'x':337,'y':216, 'c':0, 'd':0},{'x':337,'y':254, 'c':0,'d':0},{'x': 377,'y':56, 'c':0,'d':0},
+              {'x':377,'y':96, 'c':0,'d':0},{'x':377,'y':136, 'c':0,'d':0},{'x':377,'y':176,'c':0,'d':0},{'x':377,'y':216, 'c':0,'d':0},{'x':377,'y':254, 'c':0, 'd':0},{'x':416,'y': 294, 'c':0,'d':0},
+              {'x':456,'y':294, 'c':0,'d':0},{'x':496,'y':294,'c':0,'d':0},{'x':536,'y':294, 'c':0, 'd':0},{'x':576,'y':294, 'c':0,'d':0},{'x': 616, 'y':294, 'c':0,'d':0}, {'x':616,'y':334, 'c':0,'d':0},
+              {'x':576,'y':334, 'c':0,'d':0},{'x':536,'y':334, 'c':0, 'd':0},{'x':496,'y':334, 'c':0,'d':0},{'x':456,'y':334, 'c':0,'d':0},{'x':416,'y':334, 'c':0, 'd':0},{'x':616, 'y':374, 'c':0,'d':0},
+              {'x':576,'y':374, 'c':0,'d':0},{'x':536,'y':374, 'c':0, 'd':0},{'x':496,'y': 374, 'c':0,'d':0},{'x':456,'y':374, 'c':0,'d':0},{'x':416,'y':374, 'c':0, 'd':0}, {'x':377,'y':416, 'c':0,'d':0},
+              {'x':377,'y': 456, 'c':0,'d':0},{'x':377,'y':496, 'c':0,'d':0},{'x':377,'y':536, 'c':0,'d':0},{'x':377,'y':576, 'c':0,'d':0},{'x':377,'y':614, 'c':0,'d':0},{'x': 337, 'y': 614, 'c':0,'d':0},
+              {'x': 337,'y':576, 'c':0,'d':0}, {'x': 337, 'y': 536, 'c':0,'d':0}, {'x':337, 'y':496, 'c':0,'d':0}, {'x':337, 'y':456, 'c':0,'d':0},{'x': 337, 'y':416, 'c':0,'d':0}, {'x': 297, 'y': 614, 'c':0,'d':0},
+              {'x': 297, 'y': 576, 'c':0,'d':0}, {'x': 297, 'y':536, 'c':0,'d':0}, {'x': 297, 'y':496, 'c':0,'d':0}, {'x': 297, 'y':456, 'c':0,'d':0},{'x': 297, 'y':416, 'c':0,'d':0}, {'x': 256, 'y':374, 'c':0,'d':0},
+              {'x': 216, 'y':374, 'c':0,'d':0}, {'x': 176, 'y':374, 'c':0,'d':0}, {'x': 136, 'y':374, 'c':0,'d':0}, {'x': 96, 'y':374, 'c':0,'d':0},{'x': 56, 'y': 374, 'c':0,'d':0}, {'x':56,'y':334, 'c':0,'d':0},
+              {'x': 96, 'y': 334, 'c':0,'d':0}, {'x': 136, 'y':334, 'c':0, 'd':0}, {'x': 176, 'y':334, 'c':0,'d':0}, {'x': 216, 'y':334, 'c':0,'d':0},{'x':256, 'y':334, 'c':0,'d':0}, {'x': 56, 'y':294, 'c':0, 'd':0}
               ]
 
 	for p in range(4):
 		screen.blit(textsurface, (720, 320))
-		screen.blit(textsurface1, (750, 360))
+		screen.blit(textsurface1, (850, 355))
 		if(gm==0):
 			if (my_player.color=='R'):
 				COLOR1=COLOR_R
@@ -214,7 +222,7 @@ def graphics(player_1, player_2, gm ):
 					coins[p]['x']=position[my_player.ptokenlist[p].getlocation()]['x']
 					coins[p]['y']=position[my_player.ptokenlist[p].getlocation()]['y']
 					position[my_player.ptokenlist[p].getlocation()]['c']+=1
-					position[my_player.ptokenlist[p].getlocation()]['m'] += 1
+
 
 				if(opp_player.ptokenlist[p].getlocation()==-1):
 					coins_o[p]['x']=Y_I[p]['x']
@@ -226,7 +234,6 @@ def graphics(player_1, player_2, gm ):
 					coins_o[p]['x']=position[opp_player.ptokenlist[p].getlocation()]['x']
 					coins_o[p]['y']=position[opp_player.ptokenlist[p].getlocation()]['y']
 					position[opp_player.ptokenlist[p].getlocation()]['c']+=1
-					position[opp_player.ptokenlist[p].getlocation()]['o'] += 1
 			else:
 				COLOR1 = COLOR_Y
 				COLOR2 = COLOR_R
@@ -240,7 +247,6 @@ def graphics(player_1, player_2, gm ):
 					coins[p]['x'] = position[my_player.ptokenlist[p].getlocation()]['x']
 					coins[p]['y'] = position[my_player.ptokenlist[p].getlocation()]['y']
 					position[my_player.ptokenlist[p].getlocation()]['c']+=1
-					position[my_player.ptokenlist[p].getlocation()]['m'] += 1
 
 				if (opp_player.ptokenlist[p].getlocation() == -1):
 					coins_o[p]['x'] = R_I[p]['x']
@@ -252,7 +258,6 @@ def graphics(player_1, player_2, gm ):
 					coins_o[p]['x'] = position[opp_player.ptokenlist[p].getlocation()]['x']
 					coins_o[p]['y'] = position[opp_player.ptokenlist[p].getlocation()]['y']
 					position[opp_player.ptokenlist[p].getlocation()]['c']+=1
-					position[opp_player.ptokenlist[p].getlocation()]['o'] += 1
 		else:
 			if (my_player.color=='B'):
 				COLOR1 = COLOR_B
@@ -267,7 +272,7 @@ def graphics(player_1, player_2, gm ):
 					coins[p]['x'] = position[my_player.ptokenlist[p].getlocation()]['x']
 					coins[p]['y'] = position[my_player.ptokenlist[p].getlocation()]['y']
 					position[my_player.ptokenlist[p].getlocation()]['c']+=1
-					position[my_player.ptokenlist[p].getlocation()]['m'] += 1
+
 
 				if (opp_player.ptokenlist[p].getlocation() == -1):
 					coins_o[p]['x'] = G_I[p]['x']
@@ -279,7 +284,7 @@ def graphics(player_1, player_2, gm ):
 					coins_o[p]['x'] = position[opp_player.ptokenlist[p].getlocation()]['x']
 					coins_o[p]['y'] = position[opp_player.ptokenlist[p].getlocation()]['y']
 					position[opp_player.ptokenlist[p].getlocation()]['c']+=1
-					position[opp_player.ptokenlist[p].getlocation()]['o'] += 1
+
 			else:
 				COLOR1 = COLOR_G
 				COLOR2 = COLOR_B
@@ -293,7 +298,6 @@ def graphics(player_1, player_2, gm ):
 					coins[p]['x'] = position[my_player.ptokenlist[p].getlocation()]['x']
 					coins[p]['y'] = position[my_player.ptokenlist[p].getlocation()]['y']
 					position[my_player.ptokenlist[p].getlocation()]['c']+=1
-					position[my_player.ptokenlist[p].getlocation()]['m'] += 1
 
 				if (opp_player.ptokenlist[p].getlocation() == -1):
 					coins_o[p]['x'] = B_I[p]['x']
@@ -305,9 +309,13 @@ def graphics(player_1, player_2, gm ):
 					coins_o[p]['x'] = position[opp_player.ptokenlist[p].getlocation()]['x']
 					coins_o[p]['y'] = position[opp_player.ptokenlist[p].getlocation()]['y']
 					position[opp_player.ptokenlist[p].getlocation()]['c']+=1
-					position[opp_player.ptokenlist[p].getlocation()]['o'] += 1
 
-
+		textsurface5 = myfont.render("My Player ", False, (0, 0, 0))
+		pygame.draw.ellipse(screen, COLOR1, [675,360, 35, 35], 0)
+		screen.blit(textsurface5, (720, 360))
+		textsurface6 = myfont.render("Opponent Player " , False, (0, 0, 0))
+		pygame.draw.ellipse(screen, COLOR2, [675,400, 35, 35], 0)
+		screen.blit(textsurface6, (720, 400))
 		pygame.draw.ellipse(screen, COLOR1, [coins[p]['x'], coins[p]['y'], 35, 35], 0)
 		pygame.draw.ellipse(screen, BLACK, [coins[p]['x'], coins[p]['y'], 35, 35], 2)
 		pygame.draw.ellipse(screen, COLOR2, [coins_o[p]['x'], coins_o[p]['y'], 35, 35], 0)
@@ -728,7 +736,7 @@ GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 YELLOW = (255, 255, 0)
 COLOR_R = (141, 23, 23)
-COLOR_B = (21, 25, 142)
+COLOR_B = (0, 203, 210)
 COLOR_G = (9, 129, 0)
 COLOR_Y = (247, 148, 0)
 coins = [{'x': 0, 'y': 0}, {'x': 0, 'y': 0}, {'x': 0, 'y': 0}, {'x': 0, 'y': 0}]
@@ -783,13 +791,16 @@ while alive:
 
 
 			# THis player's turn to
-			sys.stdout.flush()
+
 			sys.stdout.write('<THROW>\n')
-
-			sys.stdout.flush()
-
+			try:
+				sys.stdout.flush()
+			except:
+				sys.stderr.write('i think game has finished')
+				sys.exit(0)
 			move_list = []
 			dice = sys.stdin.readline().strip()
+			sys.stderr.write('my player received dice value as>>>'+dice)
 			dice_value_list = []
 			#sys.stderr.write('read from dice string ' + dice + '\n')
 			i = 2
@@ -887,21 +898,25 @@ while alive:
 						else:
 							str1 = str1 + str('<next>')
 							str1 = str1 + str(i)
+				try:
+					if(str1 == ''):
+						sys.stdout.write('NA\n')
+					else :
+						sys.stdout.write(str1+'\n')
 
-				if(str1 == ''):
-					sys.stdout.write('NA\n')
-				else :
-					sys.stdout.write(str1+'\n')
 
-
-				sys.stdout.flush()
+					sys.stdout.flush()
+				except:
+					sys.stderr.write('i think game has finished')
+					sys.exit(0)
+					break
 				sys.stderr.write("my token pos are>>>" + str(my_player.ptokenlist[0].getlocation()) + '>>>' + str(
 					my_player.ptokenlist[1].getlocation()) + '>>>' + str(
 					my_player.ptokenlist[2].getlocation()) + '>>>' + str(my_player.ptokenlist[3].getlocation()) + '\n')
 				sys.stderr.write("my token counter are:::" + str(my_player.ptokenlist[0].counter) + ">>>" + str(
 					my_player.ptokenlist[1].counter) + ">>>" + str(my_player.ptokenlist[2].counter) + ">>>" + str(
 					my_player.ptokenlist[3].counter) + "\n")
-			graphics(my_player,opp_player,gm)
+			graphics(my_player,opp_player,gm,0)
 
 
 
@@ -915,46 +930,44 @@ while alive:
 		if dice != 'REPEAT':
 
 			#sys.stderr.write('bot_msg_dice: ' + dice + '\n')
+			try:
+				move = sys.stdin.readline().strip()
 
-			move = sys.stdin.readline().strip()
 
+				move_opp_list = move.split('<next>')
+				for move1 in move_opp_list:
 
-			move_opp_list = move.split('<next>')
-			for move1 in move_opp_list:
+					if ((move1[1] =='0') or (move1[1] =='1') or (move1[1] =='2') or (move1[1] =='3')):
+						loc = (opp_player.ptokenlist[ord(move1[1])-48].getlocation() + ord(move1[3])-48)%72
+						if (loc == stopStates[opp_player.color]+1):
+							opp_player.ptokenlist[ord(move1[1])-48].setlocation(-2)
+						#if opp token was at starthome lane -1 and dice value =6 add 5
+						elif((loc== 17 or loc== 35 or loc== 53 or loc== 71 ) and( ord(move1[3])-48== 6) ):
+							opp_player.ptokenlist[ord(move1[1]) - 48].setlocation((loc + 5) % 72)
 
-				if ((move1[1] =='0') or (move1[1] =='1') or (move1[1] =='2') or (move1[1] =='3')):
-					loc = (opp_player.ptokenlist[ord(move1[1])-48].getlocation() + ord(move1[3])-48)%72
-					if (loc == stopStates[opp_player.color]+1):
-						opp_player.ptokenlist[ord(move1[1])-48].setlocation(-2)
-					#if opp token was at starthome lane -1 and dice value =6 add 5
-					elif((loc== 17 or loc== 35 or loc== 53 or loc== 71 ) and( ord(move1[3])-48== 6) ):
-						opp_player.ptokenlist[ord(move1[1]) - 48].setlocation((loc + 5) % 72)
-
-					else:
-
-						if (opp_player.ptokenlist[ord(move1[1])-48].getlocation() == -1):
-								opp_player.ptokenlist[ord(move1[1])-48].setlocation(startStates[opp_player.color])
 						else:
-							if (opp_player.ptokenlist[ord(move1[1])-48].color != Board[loc].color) and (Board[loc].color != "W"):
-								opp_player.ptokenlist[ord(move1[1])-48].setlocation((loc + 5) % 72)
+
+							if (opp_player.ptokenlist[ord(move1[1])-48].getlocation() == -1):
+									opp_player.ptokenlist[ord(move1[1])-48].setlocation(startStates[opp_player.color])
 							else:
-								opp_player.ptokenlist[ord(move1[1]) - 48].setlocation((loc) % 72)
-					loc = opp_player.ptokenlist[ord(move1[1])-48].getlocation()
-					for myid in range(4):
-						if(my_player.ptokenlist[myid].getlocation() == loc and loc != -2 and Board[loc].safe_state_flag == False):
-							my_player.ptokenlist[myid].setlocation(-1)
-							my_player.ptokenlist[myid].counter = 0
-							my_player.out_pieces = my_player.out_pieces -1
-			sys.stderr.write("opp token pos are>>>" + str(opp_player.ptokenlist[0].getlocation()) +'>>>'+ str(
-					opp_player.ptokenlist[1].getlocation()) +'>>>'+ str(opp_player.ptokenlist[2].getlocation())+'>>>' + str(
-					opp_player.ptokenlist[3].getlocation()) + '\n')
-			if move.strip().split('<next>')[-1] == 'REPEAT':
-				REPEAT = True
+								if (opp_player.ptokenlist[ord(move1[1])-48].color != Board[loc].color) and (Board[loc].color != "W"):
+									opp_player.ptokenlist[ord(move1[1])-48].setlocation((loc + 5) % 72)
+								else:
+									opp_player.ptokenlist[ord(move1[1]) - 48].setlocation((loc) % 72)
+						loc = opp_player.ptokenlist[ord(move1[1])-48].getlocation()
+						for myid in range(4):
+							if(my_player.ptokenlist[myid].getlocation() == loc and loc != -2 and Board[loc].safe_state_flag == False):
+								my_player.ptokenlist[myid].setlocation(-1)
+								my_player.ptokenlist[myid].counter = 0
+								my_player.out_pieces = my_player.out_pieces -1
+				sys.stderr.write("opp token pos are>>>" + str(opp_player.ptokenlist[0].getlocation()) +'>>>'+ str(
+						opp_player.ptokenlist[1].getlocation()) +'>>>'+ str(opp_player.ptokenlist[2].getlocation())+'>>>' + str(
+						opp_player.ptokenlist[3].getlocation()) + '\n')
+				if move.strip().split('<next>')[-1] == 'REPEAT':
+					REPEAT = True
 
-			graphics(my_player, opp_player, gm)
-
-
-
-
+				graphics(my_player, opp_player, gm,0)
+			except:
+				graphics(my_player, opp_player, gm,1)
 
 
