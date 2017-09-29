@@ -13,7 +13,7 @@ def graphics(player_1, player_2, gm, win ):
 	COLOR2=(0,0,0)
 	screen.fill(WHITE)
 	string=''
-
+	x=0
 	myfont = pygame.font.SysFont('Comic Sans MS', 35)
 	myfont_d = pygame.font.SysFont('Comic Sans MS', 50)
 	for i in dice_value_list:
@@ -29,8 +29,10 @@ def graphics(player_1, player_2, gm, win ):
 		else:
 			screen.blit(textsurface4, (750, 500))
 	screen.blit(textsurface2,(750, 60))
-	#screen.blit(textsurface, (720,320))
-	#screen.blit(textsurface1, (750, 360))
+	pygame.draw.polygon(screen, RED, [(350,350),(294,292),(294,412)], 0)
+	pygame.draw.polygon(screen, BLUE, [(350,350),(294,412),(415,412)], 0)
+	pygame.draw.polygon(screen, GREEN, [(350,350),(294,292),(415,292)], 0)
+	pygame.draw.polygon(screen, YELLOW, [(350,350),(415,292),(415,412)], 0)
 
 	pygame.draw.rect(screen, BLACK , [50,50,604,604],1)
 	pygame.draw.rect(screen, BLACK , [52,52,600,600],1)
@@ -51,6 +53,7 @@ def graphics(player_1, player_2, gm, win ):
 	pygame.draw.rect(screen, RED, [254,332, 40,40],0)
 	pygame.draw.rect(screen, RED, [94,292, 40,40],0)
 	pygame.draw.rect(screen, RED, [55,55 ,238 ,235],0)
+	pygame.draw.rect(screen, RED, [134, 372, 40, 40], 0)
 
 	#########################
 	pygame.draw.rect(screen, BLACK , [94,292, 40,40],1)
@@ -78,7 +81,7 @@ def graphics(player_1, player_2, gm, win ):
 	pygame.draw.rect(screen, BLACK , [414,292, 40,40],1)
 	pygame.draw.rect(screen, BLACK , [454,292, 40,40],1)
 	pygame.draw.rect(screen, BLACK , [494,292, 40,40],1)
-	pygame.draw.rect(screen, BLACK , [534,292, 40,40],1)
+	#pygame.draw.rect(screen, BLACK , [534,292, 40,40],1)
 	pygame.draw.rect(screen, BLACK , [574,292, 40,40],1)
 	pygame.draw.rect(screen, BLACK , [614,292, 40,40],1)
 
@@ -89,9 +92,12 @@ def graphics(player_1, player_2, gm, win ):
 	pygame.draw.rect(screen, YELLOW, [534,332, 40,40],0)
 	pygame.draw.rect(screen, YELLOW, [574,332, 40,40],0)
 	pygame.draw.rect(screen, YELLOW, [574,372, 40,40],0)
+	pygame.draw.rect(screen, YELLOW, [534, 292, 40, 40],0)
+	#pygame.draw.rect(screen, YELLOW, [534, 372, 40, 40], 0)
 	pygame.draw.rect(screen, YELLOW, [415,415 ,235 ,235],0)
 
 	#########################
+	pygame.draw.rect(screen, BLACK, [534, 292, 40, 40], 1)
 	pygame.draw.rect(screen, BLACK , [454,292, 40,40],1)
 	pygame.draw.rect(screen, BLACK , [414,332, 40,40],1)
 	pygame.draw.rect(screen, BLACK , [454,332, 40,40],1)
@@ -117,7 +123,7 @@ def graphics(player_1, player_2, gm, win ):
 	#UP boxes (GREEN)
 	pygame.draw.rect(screen, BLACK , [295,54, 40,40],1)
 	pygame.draw.rect(screen, BLACK , [295,94, 40,40],1)
-	pygame.draw.rect(screen, BLACK , [295,134, 40,40],1)
+	#pygame.draw.rect(screen, BLACK , [295,134, 40,40],1)
 	pygame.draw.rect(screen, BLACK , [295,174, 40,40],1)
 	pygame.draw.rect(screen, BLACK , [295,214, 40,38],1)
 	pygame.draw.rect(screen, BLACK , [295,252, 40,38],1)
@@ -129,9 +135,11 @@ def graphics(player_1, player_2, gm, win ):
 	pygame.draw.rect(screen, GREEN, [335,214, 40,38],0)
 	pygame.draw.rect(screen, GREEN, [335,252, 40,38],0)
 	pygame.draw.rect(screen, GREEN, [375,94, 38,40],0)
+	pygame.draw.rect(screen, GREEN, [295, 134, 40, 40], 0)
 	pygame.draw.rect(screen, GREEN, [ 415,55 ,235 ,235],0)
 
 	#########################
+	pygame.draw.rect(screen, BLACK, [295, 134, 40, 40], 1)
 	pygame.draw.rect(screen, BLACK , [335,54, 40,40],1)
 	pygame.draw.rect(screen, BLACK , [335,94, 40,40],1)
 	pygame.draw.rect(screen, BLACK , [335,134, 40,40],1)
@@ -167,6 +175,7 @@ def graphics(player_1, player_2, gm, win ):
 	pygame.draw.rect(screen, BLUE, [335,534, 40,40],0)
 	pygame.draw.rect(screen, BLUE, [335,574, 40,38],0)
 	pygame.draw.rect(screen, BLUE, [295,574, 40,38],0)
+	pygame.draw.rect(screen, BLUE, [375, 534, 38, 40],0)
 	pygame.draw.rect(screen, BLUE, [55,415 ,238 ,235],0)
 
 
@@ -233,7 +242,7 @@ def graphics(player_1, player_2, gm, win ):
 				else:
 					coins_o[p]['x']=position[opp_player.ptokenlist[p].getlocation()]['x']
 					coins_o[p]['y']=position[opp_player.ptokenlist[p].getlocation()]['y']
-					position[opp_player.ptokenlist[p].getlocation()]['c']+=1
+					position[opp_player.ptokenlist[p].getlocation()]['d']+=1
 			else:
 				COLOR1 = COLOR_Y
 				COLOR2 = COLOR_R
@@ -257,7 +266,7 @@ def graphics(player_1, player_2, gm, win ):
 				else:
 					coins_o[p]['x'] = position[opp_player.ptokenlist[p].getlocation()]['x']
 					coins_o[p]['y'] = position[opp_player.ptokenlist[p].getlocation()]['y']
-					position[opp_player.ptokenlist[p].getlocation()]['c']+=1
+					position[opp_player.ptokenlist[p].getlocation()]['d']+=1
 		else:
 			if (my_player.color=='B'):
 				COLOR1 = COLOR_B
@@ -283,7 +292,7 @@ def graphics(player_1, player_2, gm, win ):
 				else:
 					coins_o[p]['x'] = position[opp_player.ptokenlist[p].getlocation()]['x']
 					coins_o[p]['y'] = position[opp_player.ptokenlist[p].getlocation()]['y']
-					position[opp_player.ptokenlist[p].getlocation()]['c']+=1
+					position[opp_player.ptokenlist[p].getlocation()]['d']+=1
 
 			else:
 				COLOR1 = COLOR_G
@@ -308,7 +317,7 @@ def graphics(player_1, player_2, gm, win ):
 				else:
 					coins_o[p]['x'] = position[opp_player.ptokenlist[p].getlocation()]['x']
 					coins_o[p]['y'] = position[opp_player.ptokenlist[p].getlocation()]['y']
-					position[opp_player.ptokenlist[p].getlocation()]['c']+=1
+					position[opp_player.ptokenlist[p].getlocation()]['d']+=1
 
 		textsurface5 = myfont.render("My Player ", False, (0, 0, 0))
 		pygame.draw.ellipse(screen, COLOR1, [675,360, 35, 35], 0)
@@ -322,15 +331,17 @@ def graphics(player_1, player_2, gm, win ):
 		pygame.draw.ellipse(screen, BLACK, [coins_o[p]['x'], coins_o[p]['y'], 35, 35], 2)
 		for i in range(position[my_player.ptokenlist[p].getlocation()]['c']):
 			pygame.draw.ellipse(screen, COLOR1, [coins[p]['x']+(i*10),coins[p]['y'],35,35],0)
-			pygame.draw.ellipse(screen, BLACK, [coins[p]['x'] + (i * 10), coins[p]['y'], 35, 35], 2)
-		for i in range(position[opp_player.ptokenlist[p].getlocation()]['c']):
+			pygame.draw.ellipse(screen, BLACK, [coins[p]['x'] +(i*10), coins[p]['y'], 35, 35], 2)
+
+		for i in range(position[opp_player.ptokenlist[p].getlocation()]['d']):
 			pygame.draw.ellipse(screen, COLOR2, [coins_o[p]['x']+(i*10),coins_o[p]['y'],35,35],0)
-			pygame.draw.ellipse(screen, BLACK, [coins_o[p]['x'] + (i * 10), coins_o[p]['y'], 35, 35], 2)
+			pygame.draw.ellipse(screen, BLACK, [coins_o[p]['x'] +(i * 10), coins_o[p]['y'], 35, 35], 2)
+
 
 	pygame.display.update()
-	time.sleep(1)
+	time.sleep(0.9)
 	pygame.display.flip()
-	clocktime.tick(10)
+	clocktime.tick(8)
 
 
 
@@ -413,6 +424,8 @@ tl1 = int(tl.split(' ')[1])
 pid = int(tl.split(' ')[0])
 
 gm = int(tl.split(' ')[2])
+
+draw = bool(int(tl.split(' ')[3]))
 
 sys.stderr.write('Time limit is {} \nGame mode is {}\n'.format(tl1, gm))
 
@@ -741,27 +754,247 @@ COLOR_G = (9, 129, 0)
 COLOR_Y = (247, 148, 0)
 coins = [{'x': 0, 'y': 0}, {'x': 0, 'y': 0}, {'x': 0, 'y': 0}, {'x': 0, 'y': 0}]
 coins_o = [{'x': 0, 'y': 0}, {'x': 0, 'y': 0}, {'x': 0, 'y': 0}, {'x': 0, 'y': 0}]
-screen = pygame.display.set_mode(size)
-pygame.display.set_caption("Assignment-2 :Ludo Bot" + "--Player No.--" + str(pid))
+
 
 # Used to manage how fast the screen updates
 clocktime = pygame.time.Clock()
 
-while alive:
-	for event in pygame.event.get():
-		if event.type == pygame.QUIT:
-			done = True
-			pygame.quit()
+if(draw == False):
+	screen = pygame.display.set_mode(size)
+	pygame.display.set_caption("Assignment-2 :Ludo Bot" + "--Player No.--" + str(pid))
+	while alive:
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				done = True
+				pygame.quit()
+		REPEAT = False
+		init_flag = False
+		flag_NA = 0
+
+
+		while (not my_player.haswon()) and (not opp_player.haswon()):
+
+			if REPEAT == False:
+
+				#sys.stderr.write('<IN WHILE>\n')
+
+				my_color = my_player.color  # returns the color of this player
+				if pid == 2 and init_flag == False:
+					init_flag = True
+					dice = sys.stdin.readline().strip()
+					sys.stderr.write('pid 2 PRINT DICE: ' + dice + '\n')
+					move = sys.stdin.readline().strip()
+
+					move_opp_list1 = move.split('<next>')
+					for move2 in move_opp_list1:
+
+						if ((move2[1] == '0') or (move2[1] == '1') or (move2[1] == '2') or (move2[1] == '3')):
+							loc = (opp_player.ptokenlist[ord(move2[1]) - 48].getlocation() + ord(move2[3]) - 48) % 72
+							if (loc == stopStates[opp_player.color] + 1):
+								opp_player.ptokenlist[ord(move2[1]) - 48].setlocation(-2)
+							else:
+								if (opp_player.ptokenlist[ord(move2[1]) - 48].getlocation() == -1):
+									opp_player.ptokenlist[ord(move2[1]) - 48].setlocation(startStates[opp_player.color])
+								else:
+									if (opp_player.ptokenlist[ord(move2[1]) - 48].color != Board[loc].color) and (
+										Board[loc].color != "W"):
+										opp_player.ptokenlist[ord(move2[1]) - 48].setlocation((loc + 5) % 72)
+									else:
+										opp_player.ptokenlist[ord(move2[1]) - 48].setlocation((loc) % 72)
+					sys.stderr.write('pid 2 PRINT MOVE: ' + move + '\n')
+
+
+
+				# THis player's turn to
+
+				sys.stdout.write('<THROW>\n')
+				try:
+					sys.stdout.flush()
+				except:
+					sys.stderr.write('i think game has finished')
+					sys.exit(0)
+				move_list = []
+				dice = sys.stdin.readline().strip()
+				sys.stderr.write('my player received dice value as>>>'+dice)
+				dice_value_list = []
+				#sys.stderr.write('read from dice string ' + dice + '\n')
+				i = 2
+				#sys.stderr.write('read from dice string ')
+				if 'SIXES' in dice:
+					sys.stdout.write('NA\n')
+					sys.stdout.flush()
+
+				else:
+					while i < len(dice.split(' ')):
+						dice_value_list.append(int(dice.split(' ')[i]))  # returns the numbers on dice
+						#sys.stderr.write('::' + str(dice.split(' ')[i]) + '\n')
+						i += 1
+					for dice_value in dice_value_list:
+
+
+						if (my_player.out_pieces == 0):  # all the 4 tokens are inside home state
+
+							if (dice_value == 6 or dice_value == 1):
+
+								my_player.ptokenlist[0].setlocation(
+									startStates[my_color])  # set the token to start position+dicevalue
+
+								my_player.out_pieces = my_player.out_pieces + 1
+
+								my_player.ptokenlist[0].counter += 1
+
+								#sys.stderr.write('move sent: ' + str(dice_value) + '\n')
+								move_list.append(my_color + str(0) + '_' + str(dice_value))
+
+								# sys.stdout.write(my_color+str(0)+'_'+str(dice_value)+'\n')
+
+								# update board
+
+
+
+							else:
+								move_list.append('NA')
+
+								# sys.stdout.write('NA\n')
+
+						else:
+
+							if (dice_value == 6 or dice_value == 1) and (my_player.out_pieces != 4):
+
+								for i in range(4):
+
+									if (my_player.ptokenlist[i].location == -1):
+										my_player.ptokenlist[i].setlocation(startStates[my_color] )
+
+										my_player.out_pieces = my_player.out_pieces + 1
+
+										my_player.ptokenlist[i].counter += 1
+										move_list.append(my_color + str(i) + '_' + str(dice_value))
+										break
+
+										# sys.stdout.write(my_color + str(i) +'_'+ str(dice_value) + '\n')
+
+
+
+							else:  # if atleast 1 token is out of home state
+
+								t = getBestPossibleMove(my_player, opp_player,
+														dice_value)  # returns the token  which should be moved
+
+								if (t == None):
+									move_list.append('NA')
+
+								else:
+									ind = invalidHomeLane(t, dice_value)  # returns the valid index at which t is to be placed
+
+
+									my_player.ptokenlist[t.id].setlocation(ind)  # set the token to start position+dicevalue
+									my_player.ptokenlist[t.id].counter += dice_value
+									# check if "t" cuts other player token
+									for oppid in range(4):
+										opp_loc =opp_player.ptokenlist[oppid].getlocation()
+										if(ind == opp_loc and opp_loc != -2 and Board[ind].safe_state_flag == False and opp_loc !=-1):
+											opp_player.ptokenlist[oppid].setlocation(-1)
+
+
+									if(t.counter == 57):
+										my_player.win_pieces += 1
+										my_player.ptokenlist[t.id].setlocation(-2)
+
+									move_list.append(my_color + str(t.id) + '_' + str(dice_value))
+
+					first = 1
+					str1 = ''
+					for i in move_list:
+						if(i!='NA'):
+							if (first == 1):
+								str1 = str1 + str(i)
+								first = 0
+							else:
+								str1 = str1 + str('<next>')
+								str1 = str1 + str(i)
+					try:
+						if(str1 == ''):
+							sys.stdout.write('NA\n')
+						else :
+							sys.stdout.write(str1+'\n')
+
+
+						sys.stdout.flush()
+					except:
+						sys.stderr.write('i think game has finished')
+						sys.exit(0)
+						break
+					sys.stderr.write("my token pos are>>>" + str(my_player.ptokenlist[0].getlocation()) + '>>>' + str(
+						my_player.ptokenlist[1].getlocation()) + '>>>' + str(
+						my_player.ptokenlist[2].getlocation()) + '>>>' + str(my_player.ptokenlist[3].getlocation()) + '\n')
+					sys.stderr.write("my token counter are:::" + str(my_player.ptokenlist[0].counter) + ">>>" + str(
+						my_player.ptokenlist[1].counter) + ">>>" + str(my_player.ptokenlist[2].counter) + ">>>" + str(
+						my_player.ptokenlist[3].counter) + "\n")
+				graphics(my_player,opp_player,gm,0)
+
+
+
+			else:
+				REPEAT=False
+
+			dice = sys.stdin.readline().strip()
+			sys.stderr.write('bot_msg_dice:------------------------- ' + dice + '\n')
+
+
+			if dice != 'REPEAT':
+
+				#sys.stderr.write('bot_msg_dice: ' + dice + '\n')
+				try:
+					move = sys.stdin.readline().strip()
+
+
+					move_opp_list = move.split('<next>')
+					for move1 in move_opp_list:
+
+						if ((move1[1] =='0') or (move1[1] =='1') or (move1[1] =='2') or (move1[1] =='3')):
+							loc = (opp_player.ptokenlist[ord(move1[1])-48].getlocation() + ord(move1[3])-48)%72
+							if (loc == stopStates[opp_player.color]+1):
+								opp_player.ptokenlist[ord(move1[1])-48].setlocation(-2)
+							#if opp token was at starthome lane -1 and dice value =6 add 5
+							elif((loc== 17 or loc== 35 or loc== 53 or loc== 71 ) and( ord(move1[3])-48== 6) ):
+								opp_player.ptokenlist[ord(move1[1]) - 48].setlocation((loc + 5) % 72)
+
+							else:
+
+								if (opp_player.ptokenlist[ord(move1[1])-48].getlocation() == -1):
+										opp_player.ptokenlist[ord(move1[1])-48].setlocation(startStates[opp_player.color])
+								else:
+									if (opp_player.ptokenlist[ord(move1[1])-48].color != Board[loc].color) and (Board[loc].color != "W"):
+										opp_player.ptokenlist[ord(move1[1])-48].setlocation((loc + 5) % 72)
+									else:
+										opp_player.ptokenlist[ord(move1[1]) - 48].setlocation((loc) % 72)
+							loc = opp_player.ptokenlist[ord(move1[1])-48].getlocation()
+							for myid in range(4):
+								if(my_player.ptokenlist[myid].getlocation() == loc and loc != -2 and Board[loc].safe_state_flag == False):
+									my_player.ptokenlist[myid].setlocation(-1)
+									my_player.ptokenlist[myid].counter = 0
+									my_player.out_pieces = my_player.out_pieces -1
+					sys.stderr.write("opp token pos are>>>" + str(opp_player.ptokenlist[0].getlocation()) +'>>>'+ str(
+							opp_player.ptokenlist[1].getlocation()) +'>>>'+ str(opp_player.ptokenlist[2].getlocation())+'>>>' + str(
+							opp_player.ptokenlist[3].getlocation()) + '\n')
+					if move.strip().split('<next>')[-1] == 'REPEAT':
+						REPEAT = True
+
+					graphics(my_player, opp_player, gm,0)
+				except:
+					graphics(my_player, opp_player, gm,1)
+
+else:
 	REPEAT = False
 	init_flag = False
 	flag_NA = 0
-
 
 	while (not my_player.haswon()) and (not opp_player.haswon()):
 
 		if REPEAT == False:
 
-			#sys.stderr.write('<IN WHILE>\n')
+			# sys.stderr.write('<IN WHILE>\n')
 
 			my_color = my_player.color  # returns the color of this player
 			if pid == 2 and init_flag == False:
@@ -782,13 +1015,11 @@ while alive:
 								opp_player.ptokenlist[ord(move2[1]) - 48].setlocation(startStates[opp_player.color])
 							else:
 								if (opp_player.ptokenlist[ord(move2[1]) - 48].color != Board[loc].color) and (
-									Board[loc].color != "W"):
+											Board[loc].color != "W"):
 									opp_player.ptokenlist[ord(move2[1]) - 48].setlocation((loc + 5) % 72)
 								else:
 									opp_player.ptokenlist[ord(move2[1]) - 48].setlocation((loc) % 72)
 				sys.stderr.write('pid 2 PRINT MOVE: ' + move + '\n')
-
-
 
 			# THis player's turn to
 
@@ -800,11 +1031,11 @@ while alive:
 				sys.exit(0)
 			move_list = []
 			dice = sys.stdin.readline().strip()
-			sys.stderr.write('my player received dice value as>>>'+dice)
+			sys.stderr.write('my player received dice value as>>>' + dice)
 			dice_value_list = []
-			#sys.stderr.write('read from dice string ' + dice + '\n')
+			# sys.stderr.write('read from dice string ' + dice + '\n')
 			i = 2
-			#sys.stderr.write('read from dice string ')
+			# sys.stderr.write('read from dice string ')
 			if 'SIXES' in dice:
 				sys.stdout.write('NA\n')
 				sys.stdout.flush()
@@ -812,10 +1043,9 @@ while alive:
 			else:
 				while i < len(dice.split(' ')):
 					dice_value_list.append(int(dice.split(' ')[i]))  # returns the numbers on dice
-					#sys.stderr.write('::' + str(dice.split(' ')[i]) + '\n')
+					# sys.stderr.write('::' + str(dice.split(' ')[i]) + '\n')
 					i += 1
 				for dice_value in dice_value_list:
-
 
 					if (my_player.out_pieces == 0):  # all the 4 tokens are inside home state
 
@@ -828,19 +1058,19 @@ while alive:
 
 							my_player.ptokenlist[0].counter += 1
 
-							#sys.stderr.write('move sent: ' + str(dice_value) + '\n')
+							# sys.stderr.write('move sent: ' + str(dice_value) + '\n')
 							move_list.append(my_color + str(0) + '_' + str(dice_value))
 
-							# sys.stdout.write(my_color+str(0)+'_'+str(dice_value)+'\n')
+						# sys.stdout.write(my_color+str(0)+'_'+str(dice_value)+'\n')
 
-							# update board
+						# update board
 
 
 
 						else:
 							move_list.append('NA')
 
-							# sys.stdout.write('NA\n')
+						# sys.stdout.write('NA\n')
 
 					else:
 
@@ -849,7 +1079,7 @@ while alive:
 							for i in range(4):
 
 								if (my_player.ptokenlist[i].location == -1):
-									my_player.ptokenlist[i].setlocation(startStates[my_color] )
+									my_player.ptokenlist[i].setlocation(startStates[my_color])
 
 									my_player.out_pieces = my_player.out_pieces + 1
 
@@ -857,7 +1087,7 @@ while alive:
 									move_list.append(my_color + str(i) + '_' + str(dice_value))
 									break
 
-									# sys.stdout.write(my_color + str(i) +'_'+ str(dice_value) + '\n')
+								# sys.stdout.write(my_color + str(i) +'_'+ str(dice_value) + '\n')
 
 
 
@@ -870,19 +1100,19 @@ while alive:
 								move_list.append('NA')
 
 							else:
-								ind = invalidHomeLane(t, dice_value)  # returns the valid index at which t is to be placed
-
+								ind = invalidHomeLane(t,
+													  dice_value)  # returns the valid index at which t is to be placed
 
 								my_player.ptokenlist[t.id].setlocation(ind)  # set the token to start position+dicevalue
 								my_player.ptokenlist[t.id].counter += dice_value
 								# check if "t" cuts other player token
 								for oppid in range(4):
-									opp_loc =opp_player.ptokenlist[oppid].getlocation()
-									if(ind == opp_loc and opp_loc != -2 and Board[ind].safe_state_flag == False and opp_loc !=-1):
+									opp_loc = opp_player.ptokenlist[oppid].getlocation()
+									if (ind == opp_loc and opp_loc != -2 and Board[
+										ind].safe_state_flag == False and opp_loc != -1):
 										opp_player.ptokenlist[oppid].setlocation(-1)
 
-
-								if(t.counter == 57):
+								if (t.counter == 57):
 									my_player.win_pieces += 1
 									my_player.ptokenlist[t.id].setlocation(-2)
 
@@ -891,7 +1121,7 @@ while alive:
 				first = 1
 				str1 = ''
 				for i in move_list:
-					if(i!='NA'):
+					if (i != 'NA'):
 						if (first == 1):
 							str1 = str1 + str(i)
 							first = 0
@@ -899,11 +1129,10 @@ while alive:
 							str1 = str1 + str('<next>')
 							str1 = str1 + str(i)
 				try:
-					if(str1 == ''):
+					if (str1 == ''):
 						sys.stdout.write('NA\n')
-					else :
-						sys.stdout.write(str1+'\n')
-
+					else:
+						sys.stdout.write(str1 + '\n')
 
 					sys.stdout.flush()
 				except:
@@ -916,58 +1145,62 @@ while alive:
 				sys.stderr.write("my token counter are:::" + str(my_player.ptokenlist[0].counter) + ">>>" + str(
 					my_player.ptokenlist[1].counter) + ">>>" + str(my_player.ptokenlist[2].counter) + ">>>" + str(
 					my_player.ptokenlist[3].counter) + "\n")
-			graphics(my_player,opp_player,gm,0)
+			#graphics(my_player, opp_player, gm, 0)
 
 
 
 		else:
-			REPEAT=False
+			REPEAT = False
 
 		dice = sys.stdin.readline().strip()
 		sys.stderr.write('bot_msg_dice:------------------------- ' + dice + '\n')
 
-
 		if dice != 'REPEAT':
 
-			#sys.stderr.write('bot_msg_dice: ' + dice + '\n')
+			# sys.stderr.write('bot_msg_dice: ' + dice + '\n')
 			try:
 				move = sys.stdin.readline().strip()
-
 
 				move_opp_list = move.split('<next>')
 				for move1 in move_opp_list:
 
-					if ((move1[1] =='0') or (move1[1] =='1') or (move1[1] =='2') or (move1[1] =='3')):
-						loc = (opp_player.ptokenlist[ord(move1[1])-48].getlocation() + ord(move1[3])-48)%72
-						if (loc == stopStates[opp_player.color]+1):
-							opp_player.ptokenlist[ord(move1[1])-48].setlocation(-2)
-						#if opp token was at starthome lane -1 and dice value =6 add 5
-						elif((loc== 17 or loc== 35 or loc== 53 or loc== 71 ) and( ord(move1[3])-48== 6) ):
+					if ((move1[1] == '0') or (move1[1] == '1') or (move1[1] == '2') or (move1[1] == '3')):
+						loc = (opp_player.ptokenlist[ord(move1[1]) - 48].getlocation() + ord(move1[3]) - 48) % 72
+						if (loc == stopStates[opp_player.color] + 1):
+							opp_player.ptokenlist[ord(move1[1]) - 48].setlocation(-2)
+						# if opp token was at starthome lane -1 and dice value =6 add 5
+						elif ((loc == 17 or loc == 35 or loc == 53 or loc == 71) and (ord(move1[3]) - 48 == 6)):
 							opp_player.ptokenlist[ord(move1[1]) - 48].setlocation((loc + 5) % 72)
 
 						else:
 
-							if (opp_player.ptokenlist[ord(move1[1])-48].getlocation() == -1):
-									opp_player.ptokenlist[ord(move1[1])-48].setlocation(startStates[opp_player.color])
+							if (opp_player.ptokenlist[ord(move1[1]) - 48].getlocation() == -1):
+								opp_player.ptokenlist[ord(move1[1]) - 48].setlocation(startStates[opp_player.color])
 							else:
-								if (opp_player.ptokenlist[ord(move1[1])-48].color != Board[loc].color) and (Board[loc].color != "W"):
-									opp_player.ptokenlist[ord(move1[1])-48].setlocation((loc + 5) % 72)
+								if (opp_player.ptokenlist[ord(move1[1]) - 48].color != Board[loc].color) and (
+									Board[loc].color != "W"):
+									opp_player.ptokenlist[ord(move1[1]) - 48].setlocation((loc + 5) % 72)
 								else:
 									opp_player.ptokenlist[ord(move1[1]) - 48].setlocation((loc) % 72)
-						loc = opp_player.ptokenlist[ord(move1[1])-48].getlocation()
+						loc = opp_player.ptokenlist[ord(move1[1]) - 48].getlocation()
 						for myid in range(4):
-							if(my_player.ptokenlist[myid].getlocation() == loc and loc != -2 and Board[loc].safe_state_flag == False):
+							if (my_player.ptokenlist[myid].getlocation() == loc and loc != -2 and Board[
+								loc].safe_state_flag == False):
 								my_player.ptokenlist[myid].setlocation(-1)
 								my_player.ptokenlist[myid].counter = 0
-								my_player.out_pieces = my_player.out_pieces -1
-				sys.stderr.write("opp token pos are>>>" + str(opp_player.ptokenlist[0].getlocation()) +'>>>'+ str(
-						opp_player.ptokenlist[1].getlocation()) +'>>>'+ str(opp_player.ptokenlist[2].getlocation())+'>>>' + str(
-						opp_player.ptokenlist[3].getlocation()) + '\n')
+								my_player.out_pieces = my_player.out_pieces - 1
+				sys.stderr.write("opp token pos are>>>" + str(opp_player.ptokenlist[0].getlocation()) + '>>>' + str(
+					opp_player.ptokenlist[1].getlocation()) + '>>>' + str(
+					opp_player.ptokenlist[2].getlocation()) + '>>>' + str(
+					opp_player.ptokenlist[3].getlocation()) + '\n')
 				if move.strip().split('<next>')[-1] == 'REPEAT':
 					REPEAT = True
 
-				graphics(my_player, opp_player, gm,0)
+				#graphics(my_player, opp_player, gm, 0)
 			except:
-				graphics(my_player, opp_player, gm,1)
+				sys.stderr.write('i think game has finished')
+				#graphics(my_player, opp_player, gm, 1)
+
+
 
 
