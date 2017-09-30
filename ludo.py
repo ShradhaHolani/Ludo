@@ -1201,8 +1201,3 @@ else:
 				sys.stderr.write('i think game has finished')
 				sys.exit(0)
 				#graphics(my_player, opp_player, gm, 1)
-
-
-
-
-
