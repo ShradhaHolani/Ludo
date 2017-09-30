@@ -242,7 +242,7 @@ def graphics(player_1, player_2, gm, win ):
 				else:
 					coins_o[p]['x']=position[opp_player.ptokenlist[p].getlocation()]['x']
 					coins_o[p]['y']=position[opp_player.ptokenlist[p].getlocation()]['y']
-					position[opp_player.ptokenlist[p].getlocation()]['d']+=1
+					position[opp_player.ptokenlist[p].getlocation()]['c']+=1
 			else:
 				COLOR1 = COLOR_Y
 				COLOR2 = COLOR_R
@@ -266,7 +266,7 @@ def graphics(player_1, player_2, gm, win ):
 				else:
 					coins_o[p]['x'] = position[opp_player.ptokenlist[p].getlocation()]['x']
 					coins_o[p]['y'] = position[opp_player.ptokenlist[p].getlocation()]['y']
-					position[opp_player.ptokenlist[p].getlocation()]['d']+=1
+					position[opp_player.ptokenlist[p].getlocation()]['c']+=1
 		else:
 			if (my_player.color=='B'):
 				COLOR1 = COLOR_B
@@ -292,7 +292,7 @@ def graphics(player_1, player_2, gm, win ):
 				else:
 					coins_o[p]['x'] = position[opp_player.ptokenlist[p].getlocation()]['x']
 					coins_o[p]['y'] = position[opp_player.ptokenlist[p].getlocation()]['y']
-					position[opp_player.ptokenlist[p].getlocation()]['d']+=1
+					position[opp_player.ptokenlist[p].getlocation()]['c']+=1
 
 			else:
 				COLOR1 = COLOR_G
@@ -317,7 +317,7 @@ def graphics(player_1, player_2, gm, win ):
 				else:
 					coins_o[p]['x'] = position[opp_player.ptokenlist[p].getlocation()]['x']
 					coins_o[p]['y'] = position[opp_player.ptokenlist[p].getlocation()]['y']
-					position[opp_player.ptokenlist[p].getlocation()]['d']+=1
+					position[opp_player.ptokenlist[p].getlocation()]['c']+=1
 
 		textsurface5 = myfont.render("My Player ", False, (0, 0, 0))
 		pygame.draw.ellipse(screen, COLOR1, [675,360, 35, 35], 0)
@@ -333,7 +333,7 @@ def graphics(player_1, player_2, gm, win ):
 			pygame.draw.ellipse(screen, COLOR1, [coins[p]['x']+(i*10),coins[p]['y'],35,35],0)
 			pygame.draw.ellipse(screen, BLACK, [coins[p]['x'] +(i*10), coins[p]['y'], 35, 35], 2)
 
-		for i in range(position[opp_player.ptokenlist[p].getlocation()]['d']):
+		for i in range(position[opp_player.ptokenlist[p].getlocation()]['c']):
 			pygame.draw.ellipse(screen, COLOR2, [coins_o[p]['x']+(i*10),coins_o[p]['y'],35,35],0)
 			pygame.draw.ellipse(screen, BLACK, [coins_o[p]['x'] +(i * 10), coins_o[p]['y'], 35, 35], 2)
 
@@ -1199,7 +1199,9 @@ else:
 				#graphics(my_player, opp_player, gm, 0)
 			except:
 				sys.stderr.write('i think game has finished')
+				sys.exit(0)
 				#graphics(my_player, opp_player, gm, 1)
+
 
 
 
