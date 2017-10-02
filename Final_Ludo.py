@@ -1,5 +1,4 @@
-# TODO -To check time limit 120s
-# If you need 1 to finish the token and also 1 token is inside home state-then what should be done
+
 
 import pygame, sys, time
 import random
@@ -709,7 +708,7 @@ def get_region(loc,my_token_color):
    return False
 
 def reach_safe_state(list1,dice):
-    sys.stderr.write("{{{{{GOING IN REACH SAFE STATE }}}}}}")
+
     for i in list1:
         l = i.getlocation()
         if((l !=-1 or l!=-2) and Board[l].home_lane_flag == False):
@@ -724,7 +723,7 @@ def reach_safe_state(list1,dice):
 
 # returns token which is located in range(1,6) ahead of opposite color token
 def defensive_move(list1, dice_value):
-    sys.stderr.write('@@@-GOING IN DEFENSIVE@@@--' + '\n')
+
     tk = None
     tlist =[]
     max=0
@@ -763,7 +762,7 @@ def defensive_move(list1, dice_value):
 def aggresive_move2(list2, dice_value):
 
 
-    sys.stderr.write('?????   GOING IN Aggressive   ????' + '\n')
+
     for i in list2:
 
         my_loc = i.getlocation()
@@ -791,7 +790,7 @@ def aggresive_move2(list2, dice_value):
 
 
 def aggresive_move(list1, dice_value):
-    sys.stderr.write('?????   GOING IN Aggressive  11111 ????' + '\n')
+
     for i in list1:
         my_loc = i.getlocation()
         if (my_loc == -2 or my_loc == -1 or Board[my_loc].home_lane_flag == True):
@@ -808,7 +807,7 @@ def aggresive_move(list1, dice_value):
 
 # returns token which is closer to homelane
 def getFastMovePiece(list1, dice_value):
-    sys.stderr.write('$$$   GOING IN Fast move $$$$$' + '\n')
+
     min_diff = 100
     pc = None
     for i in list1:
@@ -874,7 +873,7 @@ def getBestPossibleMove(my_player, opp_player, dice_value):
 
 
     if (pc == None):
-        sys.stderr.write('MOVING ANY TOKEN FROM HOME LANE')
+
         hl_pc_list = inHomeLane(my_player)  # returns list of token which are inside home lane
         max = 0
         tk = -1
@@ -892,7 +891,7 @@ def getBestPossibleMove(my_player, opp_player, dice_value):
                 if (my_player.ptokenlist[tk].counter + dice_value < 57):
                     return my_player.ptokenlist[tk]  # returns token which is to be moved
 
-    sys.stderr.write('PC @@@----------------' + str(pc) + '\n')
+
     return pc
 
 
@@ -930,13 +929,13 @@ if (draw == False):
 
             if REPEAT == False:
 
-                # sys.stderr.write('<IN WHILE>\n')
+
 
                 my_color = my_player.color  # returns the color of this player
                 if pid == 2 and init_flag == False:
                     init_flag = True
                     dice = sys.stdin.readline().strip()
-                    sys.stderr.write('pid 2 PRINT DICE: ' + dice + '\n')
+
                     move = sys.stdin.readline().strip()
 
                     move_opp_list1 = move.split('<next>')
@@ -955,7 +954,7 @@ if (draw == False):
                                         opp_player.ptokenlist[ord(move2[1]) - 48].setlocation((loc + 5) % 72)
                                     else:
                                         opp_player.ptokenlist[ord(move2[1]) - 48].setlocation((loc) % 72)
-                    sys.stderr.write('pid 2 PRINT MOVE: ' + move + '\n')
+
 
                 # THis player's turn to
                 sys.stdout.flush()
@@ -967,9 +966,9 @@ if (draw == False):
                 move_list = []
                 dice = sys.stdin.readline().strip()
                 dice_value_list = []
-                # sys.stderr.write('read from dice string ' + dice + '\n')
+
                 i = 2
-                # sys.stderr.write('read from dice string ')
+
                 if 'SIXES' in dice:
                     sys.stdout.write('NA\n')
                     sys.stdout.flush()
@@ -977,7 +976,7 @@ if (draw == False):
                 else:
                     while i < len(dice.split(' ')):
                         dice_value_list.append(int(dice.split(' ')[i]))  # returns the numbers on dice
-                        # sys.stderr.write('::' + str(dice.split(' ')[i]) + '\n')
+
                         i += 1
                     for dice_value in dice_value_list:
 
@@ -992,12 +991,12 @@ if (draw == False):
 
                                 my_player.ptokenlist[0].counter += 1
 
-                                # sys.stderr.write('move sent: ' + str(dice_value) + '\n')
+
                                 move_list.append(my_color + str(0) + '_' + str(dice_value))
 
-                            # sys.stdout.write(my_color+str(0)+'_'+str(dice_value)+'\n')
 
-                            # update board
+
+
 
 
 
@@ -1078,12 +1077,7 @@ if (draw == False):
                         sys.exit(0)
 
 
-                    sys.stderr.write("my token pos are>>>" + str(my_player.ptokenlist[0].getlocation()) + '>>>' + str(
-                        my_player.ptokenlist[1].getlocation()) + '>>>' + str(
-                        my_player.ptokenlist[2].getlocation()) + '>>>' + str(my_player.ptokenlist[3].getlocation()) + '\n')
-                    sys.stderr.write("my token counter are:::" + str(my_player.ptokenlist[0].counter) + ">>>" + str(
-                        my_player.ptokenlist[1].counter) + ">>>" + str(my_player.ptokenlist[2].counter) + ">>>" + str(
-                        my_player.ptokenlist[3].counter) + "\n")
+
                 graphics(my_player, opp_player, gm,0)
 
 
@@ -1099,18 +1093,17 @@ if (draw == False):
                 if 'SIXES' in dice:
                     break
                 opp_value_list.append(int(dice.split(' ')[i]))  # returns the numbers on dice
-                #  sys.stderr.write('::' + str(dice.split(' ')[i]) + '\n')
+
 
                 i += 1
 
 
             if dice != 'REPEAT':
 
-                # sys.stderr.write('bot_msg_dice: ' + dice + '\n')
-                sys.stderr.write("Opp_dice: " + dice)
+
                 try:
                     move = sys.stdin.readline().strip()
-                    sys.stderr.write('Opp Move: ' + move + '\n')
+
 
                     move_opp_list = move.split('<next>')
                     for move1 in move_opp_list:
@@ -1145,10 +1138,7 @@ if (draw == False):
                                     my_player.ptokenlist[myid].setlocation(-1)
                                     my_player.ptokenlist[myid].counter = 0
                                     my_player.out_pieces = my_player.out_pieces - 1
-                    sys.stderr.write("opp token pos are>>>" + str(opp_player.ptokenlist[0].getlocation()) + '>>>' + str(
-                        opp_player.ptokenlist[1].getlocation()) + '>>>' + str(
-                        opp_player.ptokenlist[2].getlocation()) + '>>>' + str(
-                        opp_player.ptokenlist[3].getlocation()) + '\n')
+
                     if move.strip().split('<next>')[-1] == 'REPEAT':
                         REPEAT = True
 
@@ -1164,13 +1154,13 @@ else:
 
         if REPEAT == False:
 
-            # sys.stderr.write('<IN WHILE>\n')
+
 
             my_color = my_player.color  # returns the color of this player
             if pid == 2 and init_flag == False:
                 init_flag = True
                 dice = sys.stdin.readline().strip()
-                sys.stderr.write('pid 2 PRINT DICE: ' + dice + '\n')
+
                 move = sys.stdin.readline().strip()
 
                 move_opp_list1 = move.split('<next>')
@@ -1189,7 +1179,7 @@ else:
                                     opp_player.ptokenlist[ord(move2[1]) - 48].setlocation((loc + 5) % 72)
                                 else:
                                     opp_player.ptokenlist[ord(move2[1]) - 48].setlocation((loc) % 72)
-                sys.stderr.write('pid 2 PRINT MOVE: ' + move + '\n')
+
 
             # THis player's turn to
             sys.stdout.flush()
@@ -1201,9 +1191,9 @@ else:
             move_list = []
             dice = sys.stdin.readline().strip()
             dice_value_list = []
-            # sys.stderr.write('read from dice string ' + dice + '\n')
+
             i = 2
-            # sys.stderr.write('read from dice string ')
+
             if 'SIXES' in dice:
                 sys.stdout.write('NA\n')
                 sys.stdout.flush()
@@ -1211,7 +1201,7 @@ else:
             else:
                 while i < len(dice.split(' ')):
                     dice_value_list.append(int(dice.split(' ')[i]))  # returns the numbers on dice
-                    # sys.stderr.write('::' + str(dice.split(' ')[i]) + '\n')
+
                     i += 1
                 for dice_value in dice_value_list:
 
@@ -1226,7 +1216,7 @@ else:
 
                             my_player.ptokenlist[0].counter += 1
 
-                            # sys.stderr.write('move sent: ' + str(dice_value) + '\n')
+                            #
                             move_list.append(my_color + str(0) + '_' + str(dice_value))
 
                         # sys.stdout.write(my_color+str(0)+'_'+str(dice_value)+'\n')
@@ -1255,7 +1245,7 @@ else:
                                     move_list.append(my_color + str(i) + '_' + str(dice_value))
                                     break
 
-                                    # sys.stdout.write(my_color + str(i) +'_'+ str(dice_value) + '\n')
+
 
 
 
@@ -1312,12 +1302,7 @@ else:
                     sys.exit(0)
 
 
-                sys.stderr.write("my token pos are>>>" + str(my_player.ptokenlist[0].getlocation()) + '>>>' + str(
-                    my_player.ptokenlist[1].getlocation()) + '>>>' + str(
-                    my_player.ptokenlist[2].getlocation()) + '>>>' + str(my_player.ptokenlist[3].getlocation()) + '\n')
-                sys.stderr.write("my token counter are:::" + str(my_player.ptokenlist[0].counter) + ">>>" + str(
-                    my_player.ptokenlist[1].counter) + ">>>" + str(my_player.ptokenlist[2].counter) + ">>>" + str(
-                    my_player.ptokenlist[3].counter) + "\n")
+
             #graphics(my_player, opp_player, gm,0)
 
 
@@ -1334,18 +1319,17 @@ else:
             if 'SIXES' in dice:
                 break
             opp_value_list.append(int(dice.split(' ')[i]))  # returns the numbers on dice
-            #  sys.stderr.write('::' + str(dice.split(' ')[i]) + '\n')
+
 
             i += 1
 
 
         if dice != 'REPEAT':
 
-            # sys.stderr.write('bot_msg_dice: ' + dice + '\n')
-            sys.stderr.write("Opp_dice: " + dice)
+
             try:
                 move = sys.stdin.readline().strip()
-                sys.stderr.write('Opp Move: ' + move + '\n')
+
 
                 move_opp_list = move.split('<next>')
                 for move1 in move_opp_list:
@@ -1380,10 +1364,7 @@ else:
                                 my_player.ptokenlist[myid].setlocation(-1)
                                 my_player.ptokenlist[myid].counter = 0
                                 my_player.out_pieces = my_player.out_pieces - 1
-                sys.stderr.write("opp token pos are>>>" + str(opp_player.ptokenlist[0].getlocation()) + '>>>' + str(
-                    opp_player.ptokenlist[1].getlocation()) + '>>>' + str(
-                    opp_player.ptokenlist[2].getlocation()) + '>>>' + str(
-                    opp_player.ptokenlist[3].getlocation()) + '\n')
+
                 if move.strip().split('<next>')[-1] == 'REPEAT':
                     REPEAT = True
 
