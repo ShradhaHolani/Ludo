@@ -10,39 +10,41 @@ pygame.init()
 
 # set token variables like color,id,location
 
-def graphics(player_1, player_2, gm,win):
+def graphics(player_1, player_2, gm, win):
+    coins = [{'x': 0, 'y': 0}, {'x': 0, 'y': 0}, {'x': 0, 'y': 0}, {'x': 0, 'y': 0}]
+    coins_o = [{'x': 0, 'y': 0}, {'x': 0, 'y': 0}, {'x': 0, 'y': 0}, {'x': 0, 'y': 0}]
     COLOR1 = (0, 0, 0)
     COLOR2 = (0, 0, 0)
     screen.fill(WHITE)
     string = ''
     string_opp=''
-    x=0
+    x = 0
+    y = 0
 
     myfont = pygame.font.SysFont('Comic Sans MS', 35)
     myfont_d = pygame.font.SysFont('Comic Sans MS', 50)
     for i in dice_value_list:
         string = string + str(i) + '  '
     for i in opp_value_list:
-        string_opp = string_opp + str(i) + '  '
+        string_opp=string_opp + str(i) + '  '
     textsurface = myfont.render('Dice Move', False, (0, 0, 0))
-    textsurface1 = myfont_d.render(string, False, (0, 0, 0))
+    textsurface1 = myfont.render(string, False, (0, 0, 0))
     textsurface7=  myfont.render(string_opp, False, (0, 0, 0))
     textsurface2 = myfont_d.render("Player No. " + str(pid), False, (0, 0, 0))
     textsurface3 = myfont_d.render("YOU WIN", False, (0, 0, 0))
     textsurface4 = myfont_d.render("YOU LOST", False, (0, 0, 0))
     if (win == 1):
-        if (my_player.ptokenlist[0].getlocation() == -2 and my_player.ptokenlist[1].getlocation() == -2 and my_player.ptokenlist[2].getlocation() == -2 and my_player.ptokenlist[3].getlocation() == -2):
+        if (my_player.ptokenlist[0].getlocation() == -2 and my_player.ptokenlist[1].getlocation() == -2 and
+                    my_player.ptokenlist[2].getlocation() == -2 and my_player.ptokenlist[3].getlocation() == -2):
             screen.blit(textsurface3, (750, 500))
         else:
             screen.blit(textsurface4, (750, 500))
     screen.blit(textsurface2, (750, 60))
-    # screen.blit(textsurface, (720,320))
-    # screen.blit(textsurface1, (750, 360))
-
     pygame.draw.polygon(screen, RED, [(350, 350), (294, 292), (294, 412)], 0)
     pygame.draw.polygon(screen, BLUE, [(350, 350), (294, 412), (415, 412)], 0)
     pygame.draw.polygon(screen, GREEN, [(350, 350), (294, 292), (415, 292)], 0)
     pygame.draw.polygon(screen, YELLOW, [(350, 350), (415, 292), (415, 412)], 0)
+
     pygame.draw.rect(screen, BLACK, [50, 50, 604, 604], 1)
     pygame.draw.rect(screen, BLACK, [52, 52, 600, 600], 1)
     # pygame.draw.rect(screen, BLACK, [700,300,150,150],3)
@@ -89,7 +91,7 @@ def graphics(player_1, player_2, gm,win):
     pygame.draw.rect(screen, BLACK, [414, 292, 40, 40], 1)
     pygame.draw.rect(screen, BLACK, [454, 292, 40, 40], 1)
     pygame.draw.rect(screen, BLACK, [494, 292, 40, 40], 1)
-    #pygame.draw.rect(screen, BLACK, [534, 292, 40, 40], 1)
+    # pygame.draw.rect(screen, BLACK , [534,292, 40,40],1)
     pygame.draw.rect(screen, BLACK, [574, 292, 40, 40], 1)
     pygame.draw.rect(screen, BLACK, [614, 292, 40, 40], 1)
 
@@ -100,8 +102,9 @@ def graphics(player_1, player_2, gm,win):
     pygame.draw.rect(screen, YELLOW, [534, 332, 40, 40], 0)
     pygame.draw.rect(screen, YELLOW, [574, 332, 40, 40], 0)
     pygame.draw.rect(screen, YELLOW, [574, 372, 40, 40], 0)
-    pygame.draw.rect(screen, YELLOW, [415, 415, 235, 235], 0)
     pygame.draw.rect(screen, YELLOW, [534, 292, 40, 40], 0)
+    # pygame.draw.rect(screen, YELLOW, [534, 372, 40, 40], 0)
+    pygame.draw.rect(screen, YELLOW, [415, 415, 235, 235], 0)
 
     #########################
     pygame.draw.rect(screen, BLACK, [534, 292, 40, 40], 1)
@@ -128,7 +131,7 @@ def graphics(player_1, player_2, gm,win):
     # UP boxes (GREEN)
     pygame.draw.rect(screen, BLACK, [295, 54, 40, 40], 1)
     pygame.draw.rect(screen, BLACK, [295, 94, 40, 40], 1)
-    #pygame.draw.rect(screen, BLACK, [295, 134, 40, 40], 1)
+    # pygame.draw.rect(screen, BLACK , [295,134, 40,40],1)
     pygame.draw.rect(screen, BLACK, [295, 174, 40, 40], 1)
     pygame.draw.rect(screen, BLACK, [295, 214, 40, 38], 1)
     pygame.draw.rect(screen, BLACK, [295, 252, 40, 38], 1)
@@ -244,11 +247,15 @@ def graphics(player_1, player_2, gm,win):
 
     for p in range(4):
         x=0
+        y=0
+        COLOR1 = (0, 0, 0)
+        COLOR2 = (0, 0, 0)
         screen.blit(textsurface, (720, 320))
         screen.blit(textsurface1, (850, 360))
         screen.blit(textsurface7,(920,400))
-
         if (gm == 0):
+            COLOR1 = (0, 0, 0)
+            COLOR2 = (0, 0, 0)
             if (my_player.color == 'R'):
                 COLOR1 = COLOR_R
                 COLOR2 = COLOR_Y
@@ -273,7 +280,7 @@ def graphics(player_1, player_2, gm,win):
                     coins_o[p]['x'] = position[opp_player.ptokenlist[p].getlocation()]['x']
                     coins_o[p]['y'] = position[opp_player.ptokenlist[p].getlocation()]['y']
                     position[opp_player.ptokenlist[p].getlocation()]['d'] += 1
-            else:
+            elif(my_player.color=='Y'):
                 COLOR1 = COLOR_Y
                 COLOR2 = COLOR_R
                 if (my_player.ptokenlist[p].getlocation() == -1):
@@ -298,6 +305,8 @@ def graphics(player_1, player_2, gm,win):
                     coins_o[p]['y'] = position[opp_player.ptokenlist[p].getlocation()]['y']
                     position[opp_player.ptokenlist[p].getlocation()]['d'] += 1
         else:
+            COLOR1 = (0, 0, 0)
+            COLOR2 = (0, 0, 0)
             if (my_player.color == 'B'):
                 COLOR1 = COLOR_B
                 COLOR2 = COLOR_G
@@ -322,7 +331,7 @@ def graphics(player_1, player_2, gm,win):
                     coins_o[p]['x'] = position[opp_player.ptokenlist[p].getlocation()]['x']
                     coins_o[p]['y'] = position[opp_player.ptokenlist[p].getlocation()]['y']
                     position[opp_player.ptokenlist[p].getlocation()]['d'] += 1
-            else:
+            elif(my_player.color=='G'):
                 COLOR1 = COLOR_G
                 COLOR2 = COLOR_B
                 if (my_player.ptokenlist[p].getlocation() == -1):
@@ -346,37 +355,41 @@ def graphics(player_1, player_2, gm,win):
                     coins_o[p]['x'] = position[opp_player.ptokenlist[p].getlocation()]['x']
                     coins_o[p]['y'] = position[opp_player.ptokenlist[p].getlocation()]['y']
                     position[opp_player.ptokenlist[p].getlocation()]['d'] += 1
-
         textsurface5 = myfont.render("My Player ", False, (0, 0, 0))
         pygame.draw.ellipse(screen, COLOR1, [675, 360, 30, 30], 0)
         screen.blit(textsurface5, (710, 360))
         textsurface6 = myfont.render("Opponent Player ", False, (0, 0, 0))
         pygame.draw.ellipse(screen, COLOR2, [675, 400, 30, 30], 0)
         screen.blit(textsurface6, (710, 400))
-        pygame.draw.ellipse(screen, COLOR1, [coins[p]['x'], coins[p]['y'], 35, 35], 0)
-        pygame.draw.ellipse(screen, BLACK, [coins[p]['x'], coins[p]['y'], 35, 35], 2)
-        pygame.draw.ellipse(screen, COLOR2, [coins_o[p]['x'], coins_o[p]['y'], 35, 35], 0)
-        pygame.draw.ellipse(screen, BLACK, [coins_o[p]['x'], coins_o[p]['y'], 35, 35], 2)
+        if (my_player.ptokenlist[p].getlocation()==-1 or my_player.ptokenlist[p].getlocation()==-2):
+            pygame.draw.ellipse(screen, COLOR1, [coins[p]['x'], coins[p]['y'], 35, 35], 0)
+            pygame.draw.ellipse(screen, BLACK, [coins[p]['x'], coins[p]['y'], 35, 35], 2)
+        if (opp_player.ptokenlist[p].getlocation() == -1 or opp_player.ptokenlist[p].getlocation() == -2):
+            pygame.draw.ellipse(screen, COLOR2, [coins_o[p]['x'], coins_o[p]['y'], 35, 35], 0)
+            pygame.draw.ellipse(screen, BLACK, [coins_o[p]['x'], coins_o[p]['y'], 35, 35], 2)
         x=0
-        for i in range(position[my_player.ptokenlist[p].getlocation()]['c']):
-            pygame.draw.ellipse(screen, COLOR1, [coins[p]['x'] + (i * 10), coins[p]['y'], 35, 35], 0)
-            pygame.draw.ellipse(screen, BLACK, [coins[p]['x'] + (i * 10), coins[p]['y'], 35, 35], 2)
-            x+=1
-        for i in range(position[my_player.ptokenlist[p].getlocation()]['d']):
-            pygame.draw.ellipse(screen, COLOR2, [coins[p]['x'] + ((i+x) * 10), coins[p]['y'], 35, 35], 0)
-            pygame.draw.ellipse(screen, BLACK, [coins[p]['x'] + ((i+x) * 10), coins[p]['y'], 35, 35], 2)
-        x=0
+        if(position[my_player.ptokenlist[p].getlocation()]!=-1 or position[my_player.ptokenlist[p].getlocation()]!=-2):
+            for i in range(position[my_player.ptokenlist[p].getlocation()]['c']):
+                pygame.draw.ellipse(screen, COLOR1, [coins[p]['x'] + (i * 10), coins[p]['y'], 35, 35], 0)
+                pygame.draw.ellipse(screen, BLACK, [coins[p]['x'] + (i * 10), coins[p]['y'], 35, 35], 2)
+                x+=1
+            for i in range(position[my_player.ptokenlist[p].getlocation()]['d']):
+                pygame.draw.ellipse(screen, COLOR2, [coins[p]['x'] + ((i+x) * 10), coins[p]['y'], 35, 35], 0)
+                pygame.draw.ellipse(screen, BLACK, [coins[p]['x'] + ((i+x) * 10), coins[p]['y'], 35, 35], 2)
+        y=0
 
-        for i in range(position[opp_player.ptokenlist[p].getlocation()]['d']):
-            pygame.draw.ellipse(screen, COLOR2, [coins_o[p]['x'] + (i * 10), coins_o[p]['y'], 35, 35], 0)
-            pygame.draw.ellipse(screen, BLACK, [coins_o[p]['x'] + (i * 10), coins_o[p]['y'], 35, 35], 2)
-            x+=1
-        for i in range(position[opp_player.ptokenlist[p].getlocation()]['c']):
-            pygame.draw.ellipse(screen, COLOR1, [coins_o[p]['x'] + ((i+x) * 10), coins_o[p]['y'], 35, 35], 0)
-            pygame.draw.ellipse(screen, BLACK, [coins_o[p]['x'] + ((i+x) * 10), coins_o[p]['y'], 35, 35], 2)
+
+        if (position[opp_player.ptokenlist[p].getlocation()] != -1 or position[opp_player.ptokenlist[p].getlocation()]!=-2):
+            for i in range(position[opp_player.ptokenlist[p].getlocation()]['c']):
+                pygame.draw.ellipse(screen, COLOR1, [coins_o[p]['x'] + (i * 10), coins_o[p]['y'], 35, 35], 0)
+                pygame.draw.ellipse(screen, BLACK, [coins_o[p]['x'] + (i * 10), coins_o[p]['y'], 35, 35], 2)
+                y+=1
+            for i in range(position[opp_player.ptokenlist[p].getlocation()]['d']):
+                pygame.draw.ellipse(screen, COLOR2, [coins_o[p]['x'] + ((i+y) * 10), coins_o[p]['y'], 35, 35], 0)
+                pygame.draw.ellipse(screen, BLACK, [coins_o[p]['x'] + ((i+y) * 10), coins_o[p]['y'], 35, 35], 2)
 
     pygame.display.update()
-    time.sleep(1)
+    time.sleep(0.8)
     pygame.display.flip()
     clocktime.tick(8)
 
@@ -883,7 +896,7 @@ def getBestPossibleMove(my_player, opp_player, dice_value):
     return pc
 
 
-opp_value_list = []
+opp_value_list=[]
 alive = True
 size = (1000, 1000)
 WHITE = (255, 255, 255)
@@ -896,9 +909,6 @@ COLOR_R = (141, 23, 23)
 COLOR_B = (0, 203, 210)
 COLOR_G = (9, 129, 0)
 COLOR_Y = (247, 148, 0)
-coins = [{'x': 0, 'y': 0}, {'x': 0, 'y': 0}, {'x': 0, 'y': 0}, {'x': 0, 'y': 0}]
-coins_o = [{'x': 0, 'y': 0}, {'x': 0, 'y': 0}, {'x': 0, 'y': 0}, {'x': 0, 'y': 0}]
-
 
 
 # Used to manage how fast the screen updates
@@ -1380,10 +1390,3 @@ else:
                 #graphics(my_player, opp_player, gm,0)
             except:
                 sys.exit(0)
-
-
-
-
-
-
-
